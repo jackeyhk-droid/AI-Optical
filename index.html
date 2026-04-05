@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Optical Interconnect Ecosystem | AI 光學互連生態系統</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700;900&family=DM+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg0:#06090f;--bg1:#0d1117;--bg2:#161b22;--bg3:#1c2333;--bg4:#242d3d;--bdr:#2a3654;--bdr2:#3b4f74;--t1:#e6edf3;--t2:#9aaed1;--t3:#5a6d94;--plug:#00e5b0;--plugB:rgba(0,229,176,.07);--npo:#ff9f43;--npoB:rgba(255,159,67,.07);--cpo:#ff6b6b;--cpoB:rgba(255,107,107,.07);--cop:#cd7f32;--copB:rgba(205,127,50,.07);--ocs:#b07af5;--ocsB:rgba(176,122,245,.07);--inp:#f56565;--inpB:rgba(245,101,101,.07);--siph:#48bb78;--siphB:rgba(72,187,120,.07);--infra:#4299e1;--infraB:rgba(66,153,225,.07);--std:#ecc94b;--stdB:rgba(236,201,75,.07);--hyp:#ed64a6;--mod:#38b2ac;--dsp:#9f7aea}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg0);color:var(--t1);font-family:'DM Sans','Noto Sans TC',sans-serif;line-height:1.6}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg0)}::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:3px}
+.modal::-webkit-scrollbar{width:5px}.modal::-webkit-scrollbar-track{background:var(--bg1)}.modal::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:3px}
+body.lang-en .tc{display:none!important}body.lang-tc .en{display:none!important}
+body.lang-tc .sh .sub,body.lang-tc .hdr h1 small,body.lang-tc .mh h2 small,body.lang-tc .c .d,body.lang-tc .mf-d,body.lang-tc .tr-role,body.lang-tc .rc .rd,body.lang-tc .tp-val,body.lang-tc .hi,body.lang-tc .fr,body.lang-tc .tl-c li,body.lang-tc .cal-row{font-weight:300}
+body.lang-tc .c h3,body.lang-tc .sh h2,body.lang-tc .mh h2,body.lang-tc h4,body.lang-tc .msa-box h4,body.lang-tc .layer h4,body.lang-tc .rc .rt,body.lang-tc .mf-v{font-weight:500}
+.hdr{position:sticky;top:0;z-index:100;background:rgba(6,9,15,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr);padding:12px 28px;display:flex;align-items:center;justify-content:space-between}
+.hdr-l{display:flex;align-items:center;gap:14px}.logo{width:36px;height:36px;background:linear-gradient(135deg,var(--plug),var(--ocs));border-radius:8px;display:flex;align-items:center;justify-content:center;font:700 11px/1 'JetBrains Mono',monospace;color:#000}
+.hdr h1{font-size:17px;font-weight:700}.hdr h1 small{display:block;font-size:12px;font-weight:400;color:var(--t2)}
+.lang-sw{display:flex;border:1px solid var(--bdr);border-radius:6px;overflow:hidden}
+.lang-sw button{padding:5px 12px;border:none;background:transparent;color:var(--t3);font:600 11px/1 'JetBrains Mono',monospace;cursor:pointer;transition:.2s}
+.lang-sw button.on{background:var(--plug);color:#000}
+/* Nav with scroll hint */
+.nav-wrap{position:relative}.nav-wrap::after{content:'';position:absolute;right:0;top:0;bottom:0;width:40px;background:linear-gradient(90deg,transparent,var(--bg1));pointer-events:none;z-index:1}
+.nav{display:flex;gap:3px;padding:8px 28px;background:var(--bg1);border-bottom:1px solid var(--bdr);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nav button{padding:6px 13px;border:none;border-radius:5px;background:0;color:var(--t2);font:500 12px/1.4 'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:.2s}
+.nav button:hover{background:var(--bg2);color:var(--t1)}.nav button.on{background:var(--bg3);color:var(--t1);box-shadow:inset 0 0 0 1px var(--bdr2)}
+.main{padding:20px 28px 60px;max-width:1600px;margin:0 auto}
+.sec{display:none;animation:fi .25s ease}.sec.on{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.sh{margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--bdr)}.sh h2{font-size:24px;font-weight:800}.sh .sub{font-size:13px;color:var(--t2);margin-top:2px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.g4{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+@media(max-width:1100px){.g2,.g3{grid-template-columns:1fr}}
+.c{background:var(--bg2);border:1px solid var(--bdr);border-radius:10px;padding:16px;position:relative;overflow:hidden;transition:.2s}
+.c:hover{border-color:var(--bdr2);transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.c h3{font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px;flex-wrap:wrap}.c .d{font-size:12px;color:var(--t2);line-height:1.6;margin-top:8px}
+.hi{padding:10px 14px;border-radius:0 7px 7px 0;margin:10px 0;font-size:12px;line-height:1.6}
+.fr{display:flex;align-items:center;gap:10px;padding:7px 12px;background:rgba(255,255,255,.015);border-radius:6px;margin-bottom:4px;font-size:12px;border:1px solid transparent;transition:.15s}.fr:hover{border-color:var(--bdr)}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:20px}
+.sc{background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;padding:14px;text-align:center}.sc .v{font:800 22px/1.2 'JetBrains Mono',monospace}.sc .l{font-size:10px;color:var(--t2);margin-top:3px}
+.tbl{width:100%;border-collapse:collapse;font-size:12px}.tbl th{background:var(--bg1);padding:8px 12px;text-align:left;border:1px solid var(--bdr);font-weight:600;font-size:11px;position:sticky;top:0;white-space:nowrap}.tbl td{padding:8px 12px;border:1px solid var(--bdr);vertical-align:top;background:var(--bg2)}.tbl tr:hover td{background:var(--bg3)}.tbl td:first-child{white-space:nowrap;min-width:90px}.tbl td:last-child{min-width:150px}
+.layer{border-left:3px solid;padding:14px 18px;margin-bottom:12px;border-radius:0 8px 8px 0;background:var(--bg2)}.layer h4{font-size:13px;font-weight:700;margin-bottom:6px}
+.rc{background:rgba(245,101,101,.04);border:1px solid rgba(245,101,101,.15);border-radius:8px;padding:14px;margin-bottom:8px}.rc .rt{font-weight:700;font-size:13px;color:#f87171;margin-bottom:4px}.rc .rd{font-size:11px;color:var(--t2)}
+.rc-bull{background:rgba(72,187,120,.04);border-color:rgba(72,187,120,.15)}.rc-bull .rt{color:var(--siph)}
+.tl{position:relative;padding-left:36px}.tl::before{content:'';position:absolute;left:14px;top:0;bottom:0;width:2px;background:linear-gradient(var(--plug),var(--ocs),var(--inp))}
+.tl-i{position:relative;margin-bottom:22px}.tl-dot{position:absolute;left:-28px;top:3px;width:12px;height:12px;border-radius:50%;border:2px solid}
+.tl-y{font:800 20px/1.2 'JetBrains Mono',monospace;margin-bottom:6px}
+.tl-c{background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;padding:14px}.tl-c ul{list-style:none;padding:0}.tl-c li{padding:4px 0;font-size:12px;color:var(--t2);border-bottom:1px solid rgba(255,255,255,.02)}.tl-c li:last-child{border:0}.tl-c li strong{color:var(--t1)}
+.msa-row{display:flex;align-items:stretch;justify-content:center;gap:0;margin:16px 0;flex-wrap:wrap}
+.msa-box{padding:12px 16px;border-radius:8px;text-align:center;min-width:140px;border:2px solid;flex:1;max-width:200px}.msa-box h4{font-size:13px;font-weight:700}.msa-box p{font-size:9px;margin-top:3px}.msa-conn{font-size:18px;color:var(--t3);padding:0 5px;align-self:center}
+/* Tech tags ◇ — pill, dashed, clickable */
+.T{display:inline-flex;align-items:center;gap:3px;padding:3px 10px 3px 7px;border-radius:20px;font:600 10px/1.5 'JetBrains Mono',monospace;letter-spacing:.3px;border:1.5px dashed;cursor:pointer;transition:.2s;background:transparent}.T:hover{filter:brightness(1.3);transform:scale(1.05)}.T::before{content:'◇';font-size:8px}.Ts{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+@media(max-width:600px){.T{padding:6px 12px 6px 9px;font-size:11px}}
+/* Company badges ■ — solid filled, region dot */
+.B{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:4px;font:700 10px/1.4 'JetBrains Mono',monospace;letter-spacing:.3px;background:var(--bg4);color:var(--t1);border:none}.B .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dot-us{background:var(--plug)}.dot-cn{background:#facc15}.dot-jp{background:#f87171}.dot-eu{background:#63b3ed}.dot-tw{background:#f687b3}.dot-pv{background:var(--t3)}
+.Bs{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tbl .Bs{min-width:140px}
+/* Company card clickable */
+.co-card{cursor:pointer;transition:.2s}.co-card:hover{border-color:var(--plug);box-shadow:0 0 16px rgba(0,229,176,.08)}
+.co-peek{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px;font-size:11px}
+.pk{padding:5px 8px;background:rgba(255,255,255,.02);border-radius:4px}.pk-l{color:var(--t3);font:600 8px/1 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.5px}.pk-v{color:var(--t1);font-weight:600;margin-top:2px;font-size:11px}
+@media(max-width:600px){.co-peek{grid-template-columns:1fr 1fr}}
+/* Modal */
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px);opacity:0;transition:opacity .15s}.mo.open{display:flex;opacity:1}
+.modal{background:var(--bg1);border:1px solid var(--bdr2);border-radius:14px;width:92%;max-width:740px;max-height:88vh;overflow-y:auto;position:relative;animation:mIn .2s ease}
+@keyframes mIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.mh{padding:20px 24px 16px;border-bottom:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:start;position:sticky;top:0;background:var(--bg1);z-index:1;border-radius:14px 14px 0 0}
+.mh h2{font-size:20px;font-weight:800}.mh h2 small{display:block;font-size:12px;font-weight:400;color:var(--t2);margin-top:2px}
+.mx{width:32px;height:32px;border-radius:8px;border:1px solid var(--bdr);background:var(--bg2);color:var(--t2);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}.mx:hover{background:var(--cpo);color:#fff}
+.mb{padding:20px 24px 24px}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.mf{padding:10px 12px;background:var(--bg2);border-radius:8px;border:1px solid var(--bdr)}.mf-l{font:600 9px/1 'JetBrains Mono',monospace;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}.mf-v{font-size:13px;font-weight:600;color:var(--t1)}.mf-d{font-size:11px;color:var(--t2);margin-top:3px;line-height:1.5}.mf-full{grid-column:1/-1}
+@media(max-width:600px){.mg{grid-template-columns:1fr}
+.mh>div{flex-direction:column;align-items:flex-start!important;gap:6px}
+.mh h2{font-size:17px}
+.mh h2 small{margin-top:4px}}
+.tr-row{display:flex;gap:10px;padding:8px 10px;background:rgba(255,255,255,.02);border-radius:6px;margin-bottom:5px;align-items:start}.tr-tag{flex-shrink:0}.tr-role{font-size:11px;color:var(--t2);line-height:1.5}.tr-role strong{color:var(--t1)}
+/* Bull/Bear toggle */
+.bb-wrap{display:flex;gap:8px;margin-bottom:12px}.bb-btn{padding:6px 16px;border:1px solid var(--bdr);border-radius:6px;background:transparent;font:600 12px 'DM Sans',sans-serif;cursor:pointer;transition:.2s;color:var(--t2)}
+.bb-btn.bull-on{background:rgba(72,187,120,.15);border-color:var(--siph);color:var(--siph)}.bb-btn.bear-on{background:rgba(245,101,101,.15);border-color:var(--cpo);color:var(--cpo)}
+.bb-case{display:none}.bb-case.bb-show{display:block}
+/* Catalyst calendar */
+.cal-row{display:flex;gap:10px;padding:8px 12px;background:rgba(255,255,255,.02);border-radius:6px;margin-bottom:5px;align-items:center;font-size:12px}
+.cal-date{font:700 11px/1 'JetBrains Mono',monospace;color:var(--plug);min-width:70px;flex-shrink:0}
+</style>
+</head>
+<body class="lang-en">
+
+<div class="hdr">
+  <div class="hdr-l"><div class="logo">λ</div><h1>AI Optical Interconnect Ecosystem<small>AI 光學互連生態系統全景圖</small></h1></div>
+  <div class="lang-sw"><button class="on" id="bE" onclick="setLang('en')" aria-label="Switch to English">EN</button><button id="bT" onclick="setLang('tc')" aria-label="切換至繁體中文">繁中</button></div>
+</div>
+
+<div class="nav-wrap"><div class="nav" id="nav">
+  <button class="on" data-s="overview" aria-label="Overview"><span class="en">Overview</span><span class="tc">總覽</span></button>
+  <button data-s="tech"><span class="en">Tech Taxonomy</span><span class="tc">技術分類</span></button>
+  <button data-s="chain"><span class="en">Supply Chain</span><span class="tc">供應鏈</span></button>
+  <button data-s="modules"><span class="en">Company Profiles</span><span class="tc">公司檔案</span></button>
+  <button data-s="hyper"><span class="en">Hyperscalers</span><span class="tc">大廠策略</span></button>
+  <button data-s="stds"><span class="en">Standards</span><span class="tc">產業標準</span></button>
+  <button data-s="timeline"><span class="en">Timeline & Risks</span><span class="tc">時間線與風險</span></button>
+</div></div>
+
+<div class="main">
+
+<!-- OVERVIEW -->
+<div class="sec on" id="s-overview">
+<div class="sh"><h2><span class="en">Ecosystem Overview</span><span class="tc">生態系統總覽</span></h2><div class="sub"><span class="en">Technologies, companies, and capital flows powering AI optical interconnects</span><span class="tc">AI光學互連的技術、公司與資金流向</span></div></div>
+<div class="sg">
+  <div class="sc"><div class="v" style="color:var(--plug)">$25B</div><div class="l"><span class="en">2025 Optical Revenue</span><span class="tc">2025年光學營收</span></div></div>
+  <div class="sc"><div class="v" style="color:var(--npo)">$44B</div><div class="l"><span class="en">2026E AI Transceiver TAM</span><span class="tc">2026年AI收發器TAM</span></div></div>
+  <div class="sc"><div class="v" style="color:var(--ocs)">$73B</div><div class="l"><span class="en">2030E AI Optical TAM</span><span class="tc">2030年AI光學TAM</span></div></div>
+  <div class="sc"><div class="v" style="color:var(--siph)">~20%</div><div class="l"><span class="en">Transceiver CAGR→2032</span><span class="tc">收發器CAGR→2032</span></div></div>
+  <div class="sc"><div class="v" style="color:var(--inp)">85%</div><div class="l"><span class="en">InP Laser CAGR→2030</span><span class="tc">InP雷射CAGR→2030</span></div></div>
+  <div class="sc"><div class="v" style="color:var(--ocs)">150%+</div><div class="l"><span class="en">OCS Shipment CAGR 25-28</span><span class="tc">OCS出貨CAGR 25-28</span></div></div>
+  <div class="sc"><div class="v" style="color:var(--hyp)">$690B</div><div class="l"><span class="en">2026E Hyperscaler CapEx</span><span class="tc">2026年大廠CapEx</span></div></div>
+  <div class="sc"><div class="v" style="color:var(--std)">$4B</div><div class="l"><span class="en">NVIDIA Optical Invest</span><span class="tc">NVIDIA光學投資</span></div></div>
+</div>
+
+<div class="hi" style="background:var(--plugB);border-left:3px solid var(--plug)">
+  <span class="en"><strong>Core Thesis:</strong> AI compute is bottlenecked by <strong>interconnects</strong>, not chips. Copper-to-optical transition is structural but multi-year. No single technology wins — the future is <strong>hybrid coexistence</strong>. Over 44% of AI accelerator roadmaps now incorporate CPO interfaces. InP laser demand CAGR 85% through 2030.</span>
+  <span class="tc"><strong>核心論點：</strong>AI算力瓶頸在<strong>互連</strong>而非晶片。銅轉光是結構性趨勢但需多年。不會有單一贏家——未來是<strong>混合共存</strong>。超過44%的AI加速器路線圖已納入CPO介面。InP雷射需求CAGR 85%至2030年。</span>
+</div>
+
+<div class="g3" style="margin-top:16px">
+  <div class="c" style="border-left:3px solid var(--plug)"><h3 style="color:var(--plug)"><span class="en">Pluggable Camp</span><span class="tc">外接派</span></h3><div class="d"><span class="en">Front-panel modules, hot-swappable. Scale-out king. Mature, repairable.</span><span class="tc">前面板模組，可熱插拔。Scale-out之王。成熟、易維修。</span></div><div class="Ts"><span class="T" style="border-color:var(--plug);color:var(--plug)" onclick="openTech('LPO')">LPO</span><span class="T" style="border-color:var(--plug);color:var(--plug)" onclick="openTech('LRO')">LRO</span><span class="T" style="border-color:var(--plug);color:var(--plug)" onclick="openTech('XPO')">XPO</span></div></div>
+  <div class="c" style="border-left:3px solid var(--npo)"><h3 style="color:var(--npo)"><span class="en">Internal Camp</span><span class="tc">內建派</span></h3><div class="d"><span class="en">Optical engine near/onto chip. Max savings, repair & yield risk.</span><span class="tc">光引擎移至晶片旁/上。極致省電，維修與良率風險。</span></div><div class="Ts"><span class="T" style="border-color:var(--npo);color:var(--npo)" onclick="openTech('NPO')">NPO</span><span class="T" style="border-color:var(--cpo);color:var(--cpo)" onclick="openTech('CPO')">CPO</span></div></div>
+  <div class="c" style="border-left:3px solid var(--cop)"><h3 style="color:var(--cop)"><span class="en">Copper & Hybrid</span><span class="tc">銅線陣營</span></h3><div class="d"><span class="en">Zero optical conversion &lt;2m. Cost king. At PCIe Gen6+ / 200G+/lane, copper effective reach shrinks below 1m.</span><span class="tc">2m內零光電轉換。成本之王。PCIe Gen6+/200G+/lane時銅線有效距離縮至1m以下。</span></div><div class="Ts"><span class="T" style="border-color:var(--cop);color:var(--cop)" onclick="openTech('AEC')">AEC</span><span class="T" style="border-color:var(--cop);color:var(--cop)" onclick="openTech('CPC')">CPC</span></div></div>
+  <div class="c" style="border-left:3px solid var(--ocs)"><h3 style="color:var(--ocs)">OCS</h3><div class="d"><span class="en">Pure light redirection. 95% less power. Google's architecture. Speed-immune.</span><span class="tc">純光路重定向。功耗降95%。Google架構。對速率免疫。</span></div><div class="Ts"><span class="T" style="border-color:var(--ocs);color:var(--ocs)" onclick="openTech('MEMS')">MEMS</span><span class="T" style="border-color:var(--ocs);color:var(--ocs)" onclick="openTech('LCoS')">LCoS</span></div></div>
+  <div class="c" style="border-left:3px solid var(--siph)"><h3 style="color:var(--siph)"><span class="en">Silicon Photonics</span><span class="tc">矽光子</span></h3><div class="d"><span class="en">CMOS-fab optical circuits. Can't emit light — needs InP. Future cost disruptor.</span><span class="tc">CMOS製程光學線路。不會發光——需要InP。未來成本顛覆者。</span></div><div class="Ts"><span class="T" style="border-color:var(--siph);color:var(--siph)" onclick="openTech('SiPh')">SiPh</span><span class="T" style="border-color:var(--siph);color:var(--siph)" onclick="openTech('TFLN')">TFLN</span></div></div>
+  <div class="c" style="border-left:3px solid var(--infra)"><h3 style="color:var(--infra)"><span class="en">Infrastructure</span><span class="tc">基礎建設</span></h3><div class="d"><span class="en">Fiber, connectors, thermal, test. Physical backbone.</span><span class="tc">光纖、連接器、散熱、測試。物理骨幹。</span></div><div class="Ts"><span class="T" style="border-color:var(--infra);color:var(--infra)" onclick="openTech('HCF')">HCF</span><span class="T" style="border-color:var(--infra);color:var(--infra)" onclick="openTech('EML')">EML</span></div></div>
+</div>
+</div>
+
+<!-- TECH TAXONOMY -->
+<div class="sec" id="s-tech">
+<div class="sh"><h2><span class="en">Technology Taxonomy</span><span class="tc">技術分類</span></h2><div class="sub"><span class="en">Click any ◇ tag for detailed info — Distance × Engine matrix</span><span class="tc">點擊任何 ◇ 標籤查看詳情——距離 × 引擎矩陣</span></div></div>
+<!-- Legend here -->
+<div style="display:flex;gap:16px;align-items:center;margin-bottom:14px;padding:8px 12px;background:var(--bg2);border-radius:6px;border:1px solid var(--bdr);flex-wrap:wrap;font-size:10px;color:var(--t3)">
+  <span style="font-weight:700"><span class="en">LEGEND:</span><span class="tc">圖例：</span></span>
+  <span style="display:flex;align-items:center;gap:4px"><span class="T" style="border-color:var(--plug);color:var(--plug);cursor:default;font-size:9px;padding:1px 6px 1px 4px">TECH</span> = <span class="en">Technology (clickable)</span><span class="tc">技術（可點擊）</span></span>
+  <span style="display:flex;align-items:center;gap:4px"><span class="B" style="font-size:9px"><span class="dot dot-us"></span>TICK</span> = <span class="en">Company</span><span class="tc">公司</span></span>
+  <span><span class="dot dot-us" style="display:inline-block;width:6px;height:6px;border-radius:50%"></span> US <span class="dot dot-cn" style="display:inline-block;width:6px;height:6px;border-radius:50%"></span> CN <span class="dot dot-jp" style="display:inline-block;width:6px;height:6px;border-radius:50%"></span> JP <span class="dot dot-eu" style="display:inline-block;width:6px;height:6px;border-radius:50%"></span> EU <span class="dot dot-tw" style="display:inline-block;width:6px;height:6px;border-radius:50%"></span> TW <span class="dot dot-pv" style="display:inline-block;width:6px;height:6px;border-radius:50%"></span> <span class="en">Private</span><span class="tc">未上市</span></span>
+</div>
+<div style="overflow-x:auto"><table class="tbl"><thead><tr><th></th><th>Scale-up (&lt;2m)</th><th>Scale-out (2m–2km)</th><th>Scale-across (&gt;2km)</th></tr></thead><tbody>
+<tr><td style="font-weight:700;color:var(--plug)"><span class="en">Pluggable</span><span class="tc">外接</span></td><td style="color:var(--t3)">—</td><td><span class="T" style="border-color:var(--plug);color:var(--plug)" onclick="openTech('LRO')">LRO</span> <span class="T" style="border-color:var(--plug);color:var(--plug)" onclick="openTech('XPO')">XPO</span> <span class="T" style="border-color:var(--plug);color:var(--plug)" onclick="openTech('LPO')">LPO</span></td><td>OSFP ZR+ / Coherent</td></tr>
+<tr><td style="font-weight:700;color:var(--npo)"><span class="en">Internal</span><span class="tc">內建</span></td><td><span class="T" style="border-color:var(--npo);color:var(--npo)" onclick="openTech('NPO')">NPO</span> <span class="T" style="border-color:var(--cpo);color:var(--cpo)" onclick="openTech('CPO')">CPO</span></td><td><span class="T" style="border-color:var(--cpo);color:var(--cpo)" onclick="openTech('CPO')">CPO</span> (switches)</td><td>—</td></tr>
+<tr><td style="font-weight:700;color:var(--cop)"><span class="en">Copper</span><span class="tc">銅線</span></td><td><span class="T" style="border-color:var(--cop);color:var(--cop)" onclick="openTech('CPC')">CPC</span> DAC</td><td><span class="T" style="border-color:var(--cop);color:var(--cop)" onclick="openTech('AEC')">AEC</span></td><td>—</td></tr>
+<tr><td style="font-weight:700;color:var(--ocs)">OCS</td><td>—</td><td><span class="T" style="border-color:var(--ocs);color:var(--ocs)" onclick="openTech('MEMS')">MEMS</span> <span class="T" style="border-color:var(--ocs);color:var(--ocs)" onclick="openTech('LCoS')">LCoS</span></td><td><span class="T" style="border-color:var(--ocs);color:var(--ocs)" onclick="openTech('MEMS')">MEMS</span></td></tr>
+<tr><td style="font-weight:700;color:var(--siph)">SiPh</td><td colspan="3"><span class="T" style="border-color:var(--siph);color:var(--siph)" onclick="openTech('SiPh')">SiPh</span> + <span class="T" style="border-color:var(--siph);color:var(--siph)" onclick="openTech('TFLN')">TFLN</span> + <span class="T" style="border-color:var(--infra);color:var(--infra)" onclick="openTech('EML')">EML</span> <span class="en">→ Heterogeneous integration across all distances</span><span class="tc">→ 異質整合跨越所有距離</span></td></tr>
+</tbody></table></div>
+
+<div class="hi" style="background:var(--plugB);border-left:3px solid var(--plug);margin-top:16px">
+  <span class="en"><strong>Key Competitive Dynamics:</strong> NPO vs CPC in the 1-2m grey zone · LRO vs AEC for short Scale-out · XPO vs traditional OSFP for density · CPO vs NPO for ultimate efficiency · MEMS OCS vs LCoS OCS for switching. All coexist — competition is about which niche expands fastest.</span>
+  <span class="tc"><strong>核心競爭動態：</strong>NPO vs CPC在1-2m灰色地帶 · LRO vs AEC在短距Scale-out · XPO vs 傳統OSFP爭密度 · CPO vs NPO爭終極效率 · MEMS vs LCoS爭光路交換。所有技術共存——競爭在於哪個定位擴張最快。</span>
+</div>
+
+<!-- Detailed Tech Explainers -->
+<h3 style="margin:20px 0 12px;font-size:16px"><span class="en">Technology Deep-Dive</span><span class="tc">技術深度解析</span></h3>
+<p style="font-size:12px;color:var(--t3);margin-bottom:14px"><span class="en">Beginner-friendly explanations with analogies — click ◇ tags for specs & related companies</span><span class="tc">以類比方式進行初學者友善的解釋——點擊 ◇ 標籤查看規格與相關公司</span></p>
+
+<h4 style="color:var(--plug);margin-bottom:10px;font-size:14px"><span class="en">① Pluggable Camp — "The USB Drive Translators"</span><span class="tc">① 外接派——「USB隨身碟翻譯官」</span></h4>
+<div class="g2" style="margin-bottom:16px">
+  <div class="c" style="border-left:3px solid var(--plug)">
+    <h3><span class="T" style="border-color:var(--plug);color:var(--plug)" onclick="openTech('LPO')">LPO</span> <span class="en">Linear Pluggable Optics</span><span class="tc">線性驅動光學</span></h3>
+    <div class="d"><span class="en">Think of a translator who boldly <strong>removes all grammar-checking equipment</strong> (DSP), letting the speaker's raw message pass through directly. This saves ~50% power and adds near-zero delay — but if the "speaker" (signal) mumbles, there's no safety net. Best for short, clean links where signal quality is already excellent. The switch chip on the other end handles any error correction itself.</span>
+    <span class="tc">想像一位翻譯官大膽地<strong>移除所有文法校正設備</strong>（DSP），讓說話者的原始訊息直接通過。省電約50%且幾乎零延遲——但如果「說話者」（訊號）含糊不清，就沒有安全網。最適合訊號品質已經很好的短距離乾淨鏈路。另一端的交換器晶片自行處理糾錯。</span></div>
+    <div class="Bs" style="margin-top:6px"><span class="B"><span class="dot dot-cn"></span>Innolight</span><span class="B"><span class="dot dot-cn"></span>Eoptolink</span><span class="B"><span class="dot dot-us"></span>COHR</span><span class="B"><span class="dot dot-us"></span>LITE</span></div>
+  </div>
+  <div class="c" style="border-left:3px solid var(--plug)">
+    <h3><span class="T" style="border-color:var(--plug);color:var(--plug)" onclick="openTech('LRO')">LRO</span> <span class="en">Linear Receive Optics</span><span class="tc">線性接收光學</span></h3>
+    <div class="d"><span class="en">The <strong>pragmatic translator</strong> — and the real 2026 production mainstream. LRO only removes the grammar-checker on the <em>listening</em> side (receiver DSP), while keeping it on the <em>speaking</em> side (transmitter). This saves 30-40% power with much better compatibility than full LPO. Already adopted at scale by <strong>Google and Meta</strong>. Think of it as: "I'll speak carefully, but I trust you to listen without a filter."</span>
+    <span class="tc"><strong>務實翻譯官</strong>——2026年真正的量產主力。LRO只移除<em>聆聽端</em>（接收端DSP）的文法校正器，保留<em>說話端</em>（發送端）的糾錯能力。省電30-40%，互通性遠優於完整LPO。已被<strong>Google與Meta</strong>大規模採用。可以理解為：「我會謹慎說話，但相信你不需要濾波器就能聽懂。」</span></div>
+    <div class="Bs" style="margin-top:6px"><span class="B"><span class="dot dot-cn"></span>Innolight</span><span class="B"><span class="dot dot-cn"></span>Eoptolink</span><span class="B"><span class="dot dot-us"></span>COHR</span><span class="B"><span class="dot dot-us"></span>LITE</span><span class="B"><span class="dot dot-us"></span>FN</span></div>
+  </div>
+  <div class="c" style="border-left:3px solid var(--plug);grid-column:1/-1">
+    <h3><span class="T" style="border-color:var(--plug);color:var(--plug)" onclick="openTech('XPO')">XPO</span> <span class="en">eXtra-dense Pluggable Optics</span><span class="tc">極致可插拔光學</span></h3>
+    <div class="d"><span class="en">When the front panel can't fit any more standard modules, Arista's answer is: <strong>build a giant USB drive with built-in water cooling</strong>. XPO is 2.7× the size of a standard OSFP module, but packs <strong>12.8Tbps per module</strong> — the bandwidth of 8 traditional modules in one. It has an integrated liquid cold plate that handles 400W+ of heat with 40-45°C warm water, and runs on a 50V DC bus to ease the motherboard's electrical burden. The result: a 128,000-GPU AI factory needs only <strong>352 switch racks instead of 1,408</strong>. Crucially, it preserves hot-swap repairability — pull it out like a USB, replace, done.</span>
+    <span class="tc">當前面板再也塞不下更多標準模組時，Arista的答案是：<strong>做一個帶內建水冷的超級大USB隨身碟</strong>。XPO的體積是標準OSFP模組的2.7倍，但單模組達<strong>12.8Tbps</strong>——一個模組等於8個傳統模組的頻寬。內建液冷散熱板，以40-45°C溫水輕鬆帶走400W+熱量，並採用50V直流供電減輕主機板電流負擔。結果：12.8萬顆GPU的AI工廠只需<strong>352個交換器機架而非1,408個</strong>。關鍵是保留了熱插拔可維修性——像拔USB一樣拉出來更換，完成。</span></div>
+    <div class="Bs" style="margin-top:6px"><span class="B"><span class="dot dot-us"></span>ANET</span><span class="B"><span class="dot dot-pv"></span>Lightmatter</span><span class="B"><span class="dot dot-cn"></span>Eoptolink</span><span class="B"><span class="dot dot-pv"></span>TeraHop</span></div>
+  </div>
+</div>
+
+<h4 style="color:var(--npo);margin-bottom:10px;font-size:14px"><span class="en">② Internal Camp — "Moving the Translator Closer to the Boss"</span><span class="tc">② 內建派——「把翻譯官搬到老闆身邊」</span></h4>
+<div class="g2" style="margin-bottom:16px">
+  <div class="c" style="border-left:3px solid var(--npo)">
+    <h3><span class="T" style="border-color:var(--npo);color:var(--npo)" onclick="openTech('NPO')">NPO</span> <span class="en">Near-Packaged Optics</span><span class="tc">近封裝光學</span></h3>
+    <div class="d"><span class="en">The brilliant compromise. Traditional pluggable modules are like a <strong>translator standing at the front door</strong>; CPO welds the translator into the boss's brain. NPO takes the middle path: it moves the translator to a desk <strong>right next to the boss</strong> (millimeters from the chip), but in a <strong>socket, not soldered</strong>. This solves all four CPO problems at once: ❶ If it breaks, just unplug — no scrapping the entire board. ❷ It avoids the chip's thermal hell zone. ❸ It's cheaper to manufacture. ❹ It still achieves CPO-level power savings. The <strong>2026-2027 transition hero</strong>, buying time until CPO matures.</span>
+    <span class="tc">完美的折衷方案。傳統可插拔模組像是<strong>站在大門口的翻譯員</strong>；CPO則把翻譯員焊進老闆的大腦裡。NPO取中間路線：把翻譯員搬到<strong>緊貼老闆辦公桌旁</strong>（距晶片僅毫米），但是<strong>插槽式，沒有焊死</strong>。這一舉解決了CPO的四大問題：❶壞了直接拔出——不需報廢整張主板。❷避開了晶片旁的散熱地獄。❸製造成本更低。❹仍然達到CPO級別的省電效果。<strong>2026-2027年的過渡期主角</strong>，為CPO成熟爭取時間。</span></div>
+    <div class="Bs" style="margin-top:6px"><span class="B"><span class="dot dot-us"></span>AVGO</span><span class="B"><span class="dot dot-cn"></span>Eoptolink</span><span class="B"><span class="dot dot-pv"></span>Lightspeed</span><span class="B"><span class="dot dot-pv"></span>Lightmatter</span></div>
+  </div>
+  <div class="c" style="border-left:3px solid var(--cpo)">
+    <h3><span class="T" style="border-color:var(--cpo);color:var(--cpo)" onclick="openTech('CPO')">CPO</span> <span class="en">Co-Packaged Optics</span><span class="tc">共封裝光學</span></h3>
+    <div class="d"><span class="en">The <strong>ultimate weapon</strong> — weld the translator directly into the boss's brain. The optical engine is co-packaged with the compute chip itself, achieving an unbeatable <strong>2-3 pJ/bit</strong> (vs 6-14 for pluggable). But four problems remain unsolved: <strong>❶ Repair:</strong> Imagine your lightbulb is welded to the house's foundation — one dead laser means scrapping a board worth tens of thousands of dollars (64+ ports down). <strong>❷ Environment:</strong> Perfect in cleanrooms, but real datacenters have dust, vibration, and heat that degrade precision alignment. <strong>❸ Cost:</strong> Do electricity savings really offset the massive upfront CapEx? <strong>❹ Supply chain:</strong> External laser source and fiber routing specs are still being written. NVIDIA is shipping CPO switches for Scale-out now, but Scale-up CPO won't arrive until <strong>2028</strong>.</span>
+    <span class="tc"><strong>終極武器</strong>——把翻譯官直接焊進老闆的大腦裡。光學引擎與運算晶片合封，達到無敵的<strong>2-3 pJ/bit</strong>（可插拔為6-14）。但四大問題仍未解決：<strong>❶維修：</strong>想像你家客廳的燈泡跟整棟房子的地基焊死在一起——一顆雷射壞了，可能要報廢一張價值數萬美元的主板（64個以上端口停擺）。<strong>❷環境：</strong>無塵室裡完美，但真實機房有灰塵、震動和高溫，會破壞精密對準。<strong>❸成本：</strong>省下的電費真的能彌補前期高昂的建置成本嗎？<strong>❹供應鏈：</strong>外部雷射源和光纖走線規範仍在制定中。NVIDIA已在Scale-out出貨CPO交換器，但Scale-up的CPO要到<strong>2028年</strong>才會到來。</span></div>
+    <div class="Bs" style="margin-top:6px"><span class="B"><span class="dot dot-us"></span>NVDA</span><span class="B"><span class="dot dot-us"></span>AVGO</span><span class="B"><span class="dot dot-us"></span>COHR</span><span class="B"><span class="dot dot-us"></span>LITE</span><span class="B"><span class="dot dot-pv"></span>Lightmatter</span><span class="B"><span class="dot dot-pv"></span>Ayar Labs</span></div>
+  </div>
+</div>
+
+<h4 style="color:var(--cop);margin-bottom:10px;font-size:14px"><span class="en">③ Copper's Last Stand — "The Highway Overpass"</span><span class="tc">③ 銅線最後防線——「高架快速道路」</span></h4>
+<div class="g2" style="margin-bottom:16px">
+  <div class="c" style="border-left:3px solid var(--cop)">
+    <h3><span class="T" style="border-color:var(--cop);color:var(--cop)" onclick="openTech('CPC')">CPC</span> <span class="en">Co-Packaged Copper</span><span class="tc">共封裝銅纜</span></h3>
+    <div class="d"><span class="en">Engineers asked: "If the distance is under 1.5 meters, why bother converting electrons to photons and back?" CPC's answer: skip the motherboard entirely. It pulls <strong>special high-speed copper cables (Twinax) directly from the chip substrate</strong>, like building a highway overpass that flies over city streets. The signal avoids the lossy PCB "surface roads" below. This is <strong>copper's last fortress</strong> — zero optical conversion, decades-mature ecosystem, cheapest option. But the physics ceiling arrives sooner than optical: at PCIe Gen6+ / 200G+/lane, effective copper reach <strong>shrinks below 1 meter</strong>. Marvell itself admits CPC is "paving the road for the optical transition."</span>
+    <span class="tc">工程師們問：「距離不到1.5公尺，為什麼要費事把電子轉成光子再轉回來？」CPC的答案：完全跳過主機板。它<strong>直接從晶片基板拉出特製高速銅纜（Twinax）</strong>，像建造一條飛越城市街道的高架快速道路，訊號避開了下方損耗嚴重的PCB「地面道路」。這是<strong>銅線的最後堡壘</strong>——零光電轉換，數十年成熟生態系，成本最低。但物理極限比光學更早到來：PCIe Gen6+/200G+/lane時，銅線有效傳輸距離<strong>縮至1公尺以下</strong>。Marvell自己都承認CPC是「為光學過渡鋪路」。</span></div>
+    <div class="Bs" style="margin-top:6px"><span class="B"><span class="dot dot-pv"></span>Samtec</span><span class="B"><span class="dot dot-us"></span>TEL</span><span class="B"><span class="dot dot-us"></span>MRVL</span><span class="B"><span class="dot dot-us"></span>ALAB</span></div>
+  </div>
+  <div class="c" style="border-left:3px solid var(--cop)">
+    <h3><span class="T" style="border-color:var(--cop);color:var(--cop)" onclick="openTech('AEC')">AEC</span> <span class="en">Active Electrical Cables</span><span class="tc">主動電纜</span></h3>
+    <div class="d"><span class="en">While CPC handles connections <strong>inside the box</strong> (chip-to-chip, &lt;1.5m), AEC handles connections <strong>between boxes</strong> (switch-to-switch, 2-7m). These are copper cables with built-in retimer chips that regenerate the signal mid-flight. <strong>Credo</strong> is the dominant market leader, already adopted by AWS, Microsoft Azure, and Meta. The industry consensus: AEC is a "stop-gap" technology that generates real revenue <em>right now</em> during the copper-to-optical transition. Don't confuse CPC and AEC — they operate at different network layers and often peacefully coexist in the same rack.</span>
+    <span class="tc">CPC處理<strong>盒子裡面</strong>的連接（晶片對晶片，&lt;1.5m），而AEC處理<strong>盒子與盒子之間</strong>的連接（交換器對交換器，2-7m）。這些銅纜內建重定時器晶片，在傳輸途中再生訊號。<strong>Credo</strong>是市場領導者，已被AWS、微軟Azure和Meta採用。產業共識：AEC是在銅轉光過渡期中<em>現在就產生真實營收</em>的「過渡性」技術。不要混淆CPC和AEC——它們在不同的網路層級運作，經常在同一個機櫃裡和平共存。</span></div>
+    <div class="Bs" style="margin-top:6px"><span class="B"><span class="dot dot-us"></span>CRDO</span><span class="B"><span class="dot dot-us"></span>MRVL</span><span class="B"><span class="dot dot-us"></span>ALAB</span></div>
+  </div>
+</div>
+
+<h4 style="color:var(--ocs);margin-bottom:10px;font-size:14px"><span class="en">④ OCS — "Tearing Down the Traffic Lights"</span><span class="tc">④ OCS——「拆掉紅綠燈」</span></h4>
+<div class="g2" style="margin-bottom:16px">
+  <div class="c" style="border-left:3px solid var(--ocs)">
+    <h3><span class="T" style="border-color:var(--ocs);color:var(--ocs)" onclick="openTech('MEMS')">MEMS</span> <span class="en">Micro-Mirror OCS (Lumentum)</span><span class="tc">微機電鏡面OCS（Lumentum）</span></h3>
+    <div class="d"><span class="en">In traditional datacenters, light signals must stop at electronic "traffic lights" (switches), convert to electricity, queue, process, then convert back to light. Google said: <strong>tear down the traffic lights and build an optical crossroads</strong>. Their Apollo system uses thousands of microscopic <strong>MEMS mirrors that physically tilt</strong> to redirect light beams — pure reflection, no electrical conversion. Result: <strong>95% less power</strong> (108W max vs thousands for electronic switches), 30% more throughput, 30% less CapEx. And the most magical property: <strong>speed-immune</strong>. A mirror doesn't care if it reflects 40G or 800G light — the same infrastructure works across generations. Lumentum builds these, with <strong>>$400M backlog</strong> and a $1B+ OCS revenue target by 2027. The trade-off: MEMS needs 100-200V drive and has mechanical fatigue risk over decades.</span>
+    <span class="tc">在傳統資料中心，光訊號必須在電子「紅綠燈」（交換器）前停下，轉成電訊號，排隊、處理，再轉回光。Google說：<strong>把紅綠燈拆了，直接蓋一座光學十字路口</strong>。他們的Apollo系統使用數千面微小的<strong>MEMS鏡面物理性傾斜</strong>來重定向光束——純反射，無電氣轉換。結果：<strong>功耗降95%</strong>（最大108W vs 電子交換器數千瓦），吞吐量提升30%，CapEx節省30%。最神奇的特性：<strong>對速率免疫</strong>。鏡面不在乎反射的是40G還是800G的光——同一套基礎設施跨世代使用。Lumentum製造這些設備，<strong>積壓訂單>$4億</strong>，目標2027年OCS營收$10億+。代價：MEMS需要100-200V高電壓驅動，數十年後有機械疲勞風險。</span></div>
+    <div class="Bs" style="margin-top:6px"><span class="B"><span class="dot dot-us"></span>LITE</span><span class="B"><span class="dot dot-us"></span>MRVL</span></div>
+  </div>
+  <div class="c" style="border-left:3px solid var(--ocs)">
+    <h3><span class="T" style="border-color:var(--ocs);color:var(--ocs)" onclick="openTech('LCoS')">LCoS</span> <span class="en">Liquid Crystal OCS (Coherent)</span><span class="tc">液晶OCS（Coherent）</span></h3>
+    <div class="d"><span class="en">Coherent took a completely different path. Instead of tiny tilting mirrors, their OCS works like a <strong>liquid crystal TV</strong> — light passes through a layer of liquid crystal whose molecular alignment is electrically changed to refract and redirect the beam. The key advantage: <strong>zero moving parts</strong>. Drive voltage is under 10V (like a remote control battery), compared to MEMS' 100-200V. Coherent claims: lower failure rate, longer lifespan. The trade-off: less production track record than MEMS, which has been running in Google's datacenters for years. This "tilting mirrors vs solid-state liquid crystal" battle is one of the most fascinating technology rivalries in the entire ecosystem.</span>
+    <span class="tc">Coherent走了一條完全不同的路。不用微小的傾斜鏡面，他們的OCS像一台<strong>液晶電視</strong>——光穿過一層液晶材料，系統電氣改變液晶分子的排列方式，讓光線折射並重定向。關鍵優勢：<strong>完全沒有運動零件</strong>。驅動電壓低於10V（像遙控器電池），而MEMS需要100-200V。Coherent宣稱：更低故障率、更長壽命。代價：量產實績不如MEMS，MEMS已在Google資料中心運行多年。這場「傾斜鏡面 vs 固態液晶」之戰，是整個生態系中最迷人的技術對決之一。</span></div>
+    <div class="Bs" style="margin-top:6px"><span class="B"><span class="dot dot-us"></span>COHR</span></div>
+  </div>
+</div>
+
+<h4 style="color:var(--siph);margin-bottom:10px;font-size:14px"><span class="en">⑤ Silicon Photonics & Materials — "The Cost Revolution"</span><span class="tc">⑤ 矽光子與材料——「成本革命」</span></h4>
+<div class="g2" style="margin-bottom:16px">
+  <div class="c" style="border-left:3px solid var(--siph)">
+    <h3><span class="T" style="border-color:var(--siph);color:var(--siph)" onclick="openTech('SiPh')">SiPh</span> <span class="en">Silicon Photonics</span><span class="tc">矽光子</span></h3>
+    <div class="d"><span class="en">Silicon is the world's best calculator, but it has one fatal flaw: <strong>it cannot emit light</strong>. Silicon Photonics takes advantage of existing TSMC/Intel/GlobalFoundries CMOS fabrication lines to print optical circuits at massive scale and ultra-low cost — the same factories that make your phone's chips. But for the "light source" it still needs an InP (Indium Phosphide) laser chip bonded on top. This is driving <strong>heterogeneous integration</strong>: SiPh backbone + TFLN modulator + InP laser, assembled by foundries using advanced packaging (CoWoS-R, Foveros). Long-term, this shifts power from traditional optical companies toward <strong>semiconductor foundries becoming optical "assembly plants."</strong></span>
+    <span class="tc">矽是世界上最好的計算器，但有一個致命缺陷：<strong>它不會發光</strong>。矽光子利用現有的台積電/Intel/GlobalFoundries CMOS生產線，以極低成本大規模印製光學線路——跟製造你手機晶片的同一批工廠。但「光源」仍然需要一顆InP（磷化銦）雷射晶片鍵合在上面。這驅動了<strong>異質整合</strong>：SiPh骨幹 + TFLN調變器 + InP雷射，由晶圓代工廠使用先進封裝（CoWoS-R/Foveros）組裝。長期來看，這將權力從傳統光學公司轉移到<strong>半導體代工廠成為光學「總裝廠」</strong>。</span></div>
+    <div class="Bs" style="margin-top:6px"><span class="B"><span class="dot dot-cn"></span>Innolight</span><span class="B"><span class="dot dot-tw"></span>TSMC</span><span class="B"><span class="dot dot-us"></span>Intel</span><span class="B"><span class="dot dot-us"></span>GFS</span><span class="B"><span class="dot dot-pv"></span>Lightmatter</span><span class="B"><span class="dot dot-pv"></span>Ayar Labs</span></div>
+  </div>
+  <div class="c" style="border-left:3px solid var(--siph)">
+    <h3><span class="T" style="border-color:var(--siph);color:var(--siph)" onclick="openTech('TFLN')">TFLN</span> <span class="en">Thin Film Lithium Niobate</span><span class="tc">薄膜鈮酸鋰</span> + <span class="T" style="border-color:var(--infra);color:var(--infra)" onclick="openTech('EML')">EML</span></h3>
+    <div class="d"><span class="en"><strong>TFLN</strong> is a next-generation modulator material — like giving SiPh a <strong>"premium gearbox."</strong> At 1.6T+ speeds, silicon photonics modulators suffer from signal blurring (chirp) and increased loss. TFLN fixes this with ultra-low power, and critically, prevents the InP laser from overheating. Still faces brittleness and yield challenges in volume production.<br><br><strong>EML</strong> (Electro-absorption Modulated Laser) is the universal "lightbulb + switch" combo chip made from InP. This is the <strong>core AI engine that every technology needs</strong> — whether CPO, LPO, XPO, or OCS, they all require an EML or similar InP laser to function. Lumentum holds 50-60% market share; Coherent is the only company mass-producing 6-inch InP wafers (4× the chip yield of standard 4-inch). The InP supply chain is the single highest-certainty chokepoint in the entire ecosystem.</span>
+    <span class="tc"><strong>TFLN</strong>是下一代調變器材料——像給矽光子換上<strong>「頂級變速箱」</strong>。在1.6T+速度下，矽光子調變器會出現訊號模糊（啁啾效應）和損耗增加。TFLN以超低功耗修復這些問題，關鍵是防止InP雷射過熱。量產仍面臨脆性和良率挑戰。<br><br><strong>EML</strong>（電吸收調變雷射）是由InP製成的通用「小燈泡+開關」合體晶片。這是<strong>每種技術都需要的核心AI引擎</strong>——不管是CPO、LPO、XPO還是OCS，都需要EML或類似的InP雷射才能運作。Lumentum掌握50-60%市佔率；Coherent是唯一量產6吋InP晶圓的公司（晶片良率為標準4吋的4倍）。InP供應鏈是整個生態系中確定性最高的咽喉。</span></div>
+    <div class="Bs" style="margin-top:6px"><span class="B"><span class="dot dot-us"></span>LITE</span><span class="B"><span class="dot dot-us"></span>COHR</span><span class="B"><span class="dot dot-us"></span>AXTI</span><span class="B"><span class="dot dot-jp"></span>Sumitomo</span></div>
+  </div>
+</div>
+</div>
+
+<!-- SUPPLY CHAIN -->
+<div class="sec" id="s-chain">
+<div class="sh"><h2><span class="en">Supply Chain Layers</span><span class="tc">六層供應鏈</span></h2><div class="sub"><span class="en">From raw materials to deployment — who makes what, where chokepoints are</span><span class="tc">從原材料到部署——誰製造什麼，瓶頸在哪裡</span></div></div>
+<div class="layer" style="border-color:var(--inp)"><h4 style="color:var(--inp)"><span class="en">L1: Materials & Substrates</span><span class="tc">L1：材料與基板</span></h4><div class="d"><span class="en">InP wafers — universal chokepoint. Orders through 2027, +30% YoY. CAGR 85% to 2030.</span><span class="tc">InP晶圓——產業咽喉。訂單至2027年，年漲30%。CAGR 85%至2030。</span></div><div class="Bs"><span class="B"><span class="dot dot-us"></span>AXTI</span><span class="B"><span class="dot dot-jp"></span>Sumitomo</span><span class="B"><span class="dot dot-us"></span>COHR</span><span class="B"><span class="dot dot-eu"></span>IQE</span></div></div>
+<div class="layer" style="border-color:var(--cpo)"><h4 style="color:var(--cpo)"><span class="en">L2: Lasers & Components</span><span class="tc">L2：雷射與元件</span></h4><div class="Bs"><span class="B"><span class="dot dot-us"></span>LITE 50-60%</span><span class="B"><span class="dot dot-us"></span>COHR</span><span class="B"><span class="dot dot-us"></span>MRVL</span><span class="B"><span class="dot dot-cn"></span>Accelink</span></div></div>
+<div class="layer" style="border-color:var(--dsp)"><h4 style="color:var(--dsp)"><span class="en">L3: IC / DSP / SerDes / Retimers</span><span class="tc">L3：IC/DSP/SerDes/重定時器</span></h4><div class="d"><span class="en">Optical DSP, CDR, retimers, SerDes IP, switch ASICs, CXL/PCIe retimers.</span><span class="tc">光學DSP、CDR、重定時器、SerDes IP、交換器ASIC、CXL/PCIe重定時器。</span></div><div class="Bs"><span class="B"><span class="dot dot-us"></span>AVGO</span><span class="B"><span class="dot dot-us"></span>MRVL</span><span class="B"><span class="dot dot-us"></span>ALAB</span><span class="B"><span class="dot dot-us"></span>MTSI</span><span class="B"><span class="dot dot-us"></span>SMTC</span><span class="B"><span class="dot dot-us"></span>CRDO</span><span class="B"><span class="dot dot-eu"></span>Alphawave</span></div></div>
+<div class="layer" style="border-color:var(--mod)"><h4 style="color:var(--mod)"><span class="en">L4: Module Assembly</span><span class="tc">L4：模組組裝</span></h4><div class="Bs"><span class="B"><span class="dot dot-cn"></span>Innolight #1</span><span class="B"><span class="dot dot-us"></span>FN</span><span class="B"><span class="dot dot-cn"></span>Eoptolink</span><span class="B"><span class="dot dot-cn"></span>TFC</span><span class="B"><span class="dot dot-us"></span>COHR</span><span class="B"><span class="dot dot-us"></span>LITE</span><span class="B"><span class="dot dot-us"></span>AAOI</span></div></div>
+<div class="layer" style="border-color:var(--infra)"><h4 style="color:var(--infra)"><span class="en">L5: Systems & Infrastructure</span><span class="tc">L5：系統與基建</span></h4><div class="Bs"><span class="B"><span class="dot dot-us"></span>ANET</span><span class="B"><span class="dot dot-us"></span>NVDA</span><span class="B"><span class="dot dot-us"></span>CSCO</span><span class="B"><span class="dot dot-us"></span>GLW</span><span class="B"><span class="dot dot-us"></span>APH</span><span class="B"><span class="dot dot-us"></span>TEL</span><span class="B"><span class="dot dot-pv"></span>Samtec</span><span class="B"><span class="dot dot-eu"></span>Prysmian</span><span class="B"><span class="dot dot-cn"></span>YOFC</span><span class="B"><span class="dot dot-us"></span>CIEN</span></div></div>
+<div class="layer" style="border-color:var(--siph)"><h4 style="color:var(--siph)"><span class="en">L6: Foundries & Packaging</span><span class="tc">L6：代工與封裝</span></h4><div class="d"><span class="en">SiPh fab + advanced packaging. Test & measurement (Keysight, Spirent) = critical enabler for 1.6T/3.2T qualification.</span><span class="tc">SiPh代工+先進封裝。測試量測（Keysight/Spirent）= 1.6T/3.2T驗證關鍵推動者。</span></div><div class="Bs"><span class="B"><span class="dot dot-tw"></span>TSM</span><span class="B"><span class="dot dot-us"></span>INTC</span><span class="B"><span class="dot dot-us"></span>GFS</span><span class="B"><span class="dot dot-tw"></span>UMC</span><span class="B"><span class="dot dot-eu"></span>TSEM</span><span class="B"><span class="dot dot-tw"></span>ASE 日月光</span><span class="B"><span class="dot dot-us"></span>KEYS</span></div></div>
+</div>
+
+<!-- COMPANY PROFILES — CSS-only lang switching -->
+<div class="sec" id="s-modules">
+<div class="sh"><h2><span class="en">Company Profiles</span><span class="tc">公司檔案</span></h2><div class="sub"><span class="en">Click any card for detailed breakdown with financials & technology involvement</span><span class="tc">點擊任何卡片查看詳細資料，包含財務指標與技術參與度</span> <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);margin-left:6px">(Metrics as of April 2026 · 數據截至2026年4月)</span></div></div>
+<div class="g3" id="cg"></div>
+</div>
+
+<!-- HYPERSCALERS -->
+<div class="sec" id="s-hyper">
+<div class="sh"><h2><span class="en">Hyperscaler Strategies</span><span class="tc">大廠策略</span></h2></div>
+<div style="overflow-x:auto"><table class="tbl">
+<thead><tr><th><span class="en">Company</span><span class="tc">公司</span></th><th><span class="en">Custom Chip</span><span class="tc">自研晶片</span></th><th>Scale-out</th><th>Scale-up</th><th><span class="en">Key Suppliers</span><span class="tc">供應商</span></th></tr></thead>
+<tbody>
+<tr><td><strong style="color:var(--hyp)">NVIDIA</strong></td><td style="font-size:11px">GPU (Blackwell → Rubin/Vera)</td><td><span class="en" style="color:var(--cpo)">Aggressive CPO — Quantum-X shipped, Spectrum-X H2'26</span><span class="tc" style="color:var(--cpo)">激進CPO — Quantum-X已出, Spectrum-X 2026H2</span></td><td><span class="en" style="color:var(--cop)">Copper NVLink to 2027H2</span><span class="tc" style="color:var(--cop)">NVLink銅至2027H2</span></td><td><div class="Bs"><span class="B"><span class="dot dot-us"></span>LITE</span><span class="B"><span class="dot dot-us"></span>COHR</span><span class="B"><span class="dot dot-us"></span>FN</span><span class="B"><span class="dot dot-cn"></span>Innolight</span></div></td></tr>
+<tr><td><strong style="color:var(--hyp)">Microsoft</strong></td><td style="font-size:11px;color:var(--npo)">Maia AI Accelerator</td><td><span class="en">XPO + Pluggable, Reliability > Power</span><span class="tc">XPO+外接，可靠性>功耗</span></td><td><span class="en">OCI MSA co-founder, multi-vendor</span><span class="tc">OCI MSA共同發起人</span></td><td><div class="Bs"><span class="B"><span class="dot dot-us"></span>ANET</span><span class="B"><span class="dot dot-us"></span>NVDA</span><span class="B"><span class="dot dot-us"></span>CRDO</span></div></td></tr>
+<tr><td><strong style="color:var(--hyp)">Meta</strong></td><td style="font-size:11px;color:var(--npo)">MTIA Inference Chip</td><td><span class="en" style="color:var(--cpo)">CPO testing w/ AVGO, 65% savings</span><span class="tc" style="color:var(--cpo)">與AVGO測試CPO，省電65%</span></td><td><span class="en" style="color:var(--cpo)">Most urgent — Llama MoE</span><span class="tc" style="color:var(--cpo)">最迫切 — Llama MoE</span></td><td><div class="Bs"><span class="B"><span class="dot dot-us"></span>AVGO</span><span class="B"><span class="dot dot-us"></span>GLW</span><span class="B"><span class="dot dot-cn"></span>Innolight</span></div></td></tr>
+<tr><td><strong style="color:var(--hyp)">AWS</strong></td><td style="font-size:11px;color:var(--npo)">Trainium 3/4</td><td><span class="en">AEC for Trainium3 (Credo key)</span><span class="tc">Trainium3用AEC（Credo）</span></td><td><span class="en" style="color:var(--cpo)">Most aggressive — MRVL/Celestial → T4 CPO</span><span class="tc" style="color:var(--cpo)">最激進 — MRVL/Celestial → T4 CPO</span></td><td><div class="Bs"><span class="B"><span class="dot dot-us"></span>CRDO</span><span class="B"><span class="dot dot-us"></span>MRVL</span></div></td></tr>
+<tr><td><strong style="color:var(--hyp)">Oracle</strong></td><td style="font-size:11px;color:var(--t3)">—</td><td><span class="en">Wants CPO — 131K GPU, RDMA flapping</span><span class="tc">渴望CPO — 13.1萬GPU</span></td><td><span class="en">OCI MSA, fears soldered lock-in</span><span class="tc">OCI MSA，擔心焊死綁架</span></td><td><div class="Bs"><span class="B"><span class="dot dot-us"></span>NVDA</span><span class="B"><span class="dot dot-us"></span>LITE</span></div></td></tr>
+<tr><td><strong style="color:var(--hyp)">Google</strong></td><td style="font-size:11px;color:var(--npo)">TPU v7 Ironwood</td><td colspan="2" style="text-align:center"><span class="en" style="color:var(--ocs);font-weight:700">Apollo OCS — MEMS mirrors, 9,216 TPUs, speed-immune, not in OCI MSA</span><span class="tc" style="color:var(--ocs);font-weight:700">Apollo OCS — MEMS鏡面, 9216 TPU, 對速率免疫, 未加入OCI MSA</span></td><td><div class="Bs"><span class="B"><span class="dot dot-us"></span>LITE</span></div></td></tr>
+</tbody></table></div>
+</div>
+
+<!-- STANDARDS — now includes UALink -->
+<div class="sec" id="s-stds">
+<div class="sh"><h2><span class="en">Standards & Alliances</span><span class="tc">產業標準與聯盟</span></h2></div>
+<div class="msa-row">
+  <div class="msa-box" style="border-color:var(--std);background:var(--stdB)"><h4 style="color:var(--std)">OCI MSA</h4><p style="color:var(--t2)">Scale-up Signal</p><p style="color:var(--t3)">AMD · AVGO · Meta<br>MSFT · NVDA · OpenAI</p></div>
+  <div class="msa-conn">+</div>
+  <div class="msa-box" style="border-color:var(--plug);background:var(--plugB)"><h4 style="color:var(--plug)">XPO MSA</h4><p style="color:var(--t2)">Module Form</p><p style="color:var(--t3)">Arista + 45</p></div>
+  <div class="msa-conn">+</div>
+  <div class="msa-box" style="border-color:var(--npo);background:var(--npoB)"><h4 style="color:var(--npo)">Open CPX</h4><p style="color:var(--t2)">NPO/CPO Socket</p><p style="color:var(--t3)">Ciena · COHR · MRVL</p></div>
+</div>
+<!-- UALink -->
+<div class="c" style="margin-top:14px;border-left:3px solid var(--hyp)">
+  <h3 style="color:var(--hyp)">UALink <span style="font-size:12px;color:var(--t2)">(Ultra Accelerator Link)</span></h3>
+  <div class="d"><span class="en"><strong>The anti-NVLink coalition.</strong> Open Scale-up interconnect standard challenging NVIDIA's proprietary NVLink. Founded by AMD, Broadcom, Cisco, Google, Intel, Meta, Microsoft. Critical for understanding the copper→optical transition dynamics — UALink defines how non-NVIDIA accelerators (Maia, MTIA, Trainium, TPU) will interconnect optically.</span>
+  <span class="tc"><strong>對抗NVLink聯盟。</strong>開放Scale-up互連標準，挑戰NVIDIA專有NVLink。由AMD、Broadcom、Cisco、Google、Intel、Meta、Microsoft發起。對理解銅→光轉換至關重要——UALink定義非NVIDIA加速器（Maia/MTIA/Trainium/TPU）如何進行光學互連。</span></div>
+  <div class="Bs"><span class="B"><span class="dot dot-us"></span>AMD</span><span class="B"><span class="dot dot-us"></span>AVGO</span><span class="B"><span class="dot dot-us"></span>CSCO</span><span class="B"><span class="dot dot-us"></span>GOOG</span><span class="B"><span class="dot dot-us"></span>INTC</span><span class="B"><span class="dot dot-us"></span>META</span><span class="B"><span class="dot dot-us"></span>MSFT</span></div>
+</div>
+<div class="g3" style="margin-top:14px">
+  <div class="c"><h3>IEEE 802.3dj</h3><div class="d"><span class="en">200G/lane PAM4. Mid-2026. Enables 1.6T→3.2T.</span><span class="tc">200G/lane PAM4。2026年中。1.6T→3.2T基礎。</span></div></div>
+  <div class="c"><h3>UCIe</h3><div class="d"><span class="en">Universal Chiplet Interconnect. Key for photonic interposer compat.</span><span class="tc">通用小晶片互連。光子中介層相容性關鍵。</span></div></div>
+  <div class="c"><h3>OIF CEI-224G</h3><div class="d"><span class="en">224G SerDes spec. Critical for 3.2T generation.</span><span class="tc">224G SerDes規範。3.2T世代關鍵。</span></div></div>
+</div>
+</div>
+
+<!-- TIMELINE & RISKS — with Bull/Bear + Catalyst Calendar -->
+<div class="sec" id="s-timeline">
+<div class="sh"><h2><span class="en">Timeline & Risks</span><span class="tc">時間線與風險</span></h2></div>
+<div class="tl" style="margin-bottom:28px">
+  <div class="tl-i"><div class="tl-dot" style="border-color:var(--plug);background:var(--plug)"></div><div class="tl-y" style="color:var(--plug)">2026</div><div class="tl-c"><ul>
+    <li><strong style="color:var(--plug)">1.6T</strong> — <span class="en">Mass production (Innolight/Eoptolink/COHR/LITE/FN)</span><span class="tc">大規模量產</span></li>
+    <li><strong style="color:var(--plug)">XPO</strong> — <span class="en">First demos (Arista + 45)</span><span class="tc">首批展示</span></li>
+    <li><strong style="color:var(--npo)">NPO</strong> — <span class="en">Validation (AVGO 3.2T, Eoptolink 6.4T SiPh)</span><span class="tc">量產驗證</span></li>
+    <li><strong style="color:var(--cpo)">CPO</strong> — <span class="en">NVIDIA switches ship (Quantum-X done, Spectrum-X H2)</span><span class="tc">NVIDIA交換器出貨</span></li>
+    <li><strong style="color:var(--std)">Standards</strong> — <span class="en">OCI + XPO + Open CPX + UALink updates land</span><span class="tc">OCI+XPO+Open CPX+UALink更新落地</span></li>
+    <li><strong style="color:var(--cop)">AEC</strong> — <span class="en">AWS Trainium3 ramp (Credo tailwind)</span><span class="tc">AWS Trainium3放量（Credo受惠）</span></li>
+  </ul></div></div>
+  <div class="tl-i"><div class="tl-dot" style="border-color:var(--npo);background:var(--npo)"></div><div class="tl-y" style="color:var(--npo)">2027</div><div class="tl-c"><ul>
+    <li><strong style="color:var(--npo)">NPO full ramp</strong> — <span class="en">Primary Scale-up interconnect</span><span class="tc">Scale-up主力</span></li>
+    <li><strong style="color:var(--cpo)">CPO</strong> — <span class="en">LITE Scale-out ships, Scale-up H2</span><span class="tc">LITE Scale-out出貨</span></li>
+    <li><strong style="color:var(--ocs)">OCS</strong> — <span class="en">LITE targets $1B+ annualized</span><span class="tc">LITE目標$10億+年化</span></li>
+    <li><strong>3.2T</strong> — <span class="en">Enters validation</span><span class="tc">進入驗證</span></li>
+    <li><strong style="color:var(--siph)">Trainium4</strong> — <span class="en">MRVL/Celestial Photonic Fabric CPO Scale-up</span><span class="tc">MRVL/Celestial光子織物CPO</span></li>
+  </ul></div></div>
+  <div class="tl-i"><div class="tl-dot" style="border-color:var(--ocs);background:var(--ocs)"></div><div class="tl-y" style="color:var(--ocs)">2028+</div><div class="tl-c"><ul>
+    <li><strong style="color:var(--cpo)">CPO mass deploy</strong> — <span class="en">After 2yr reliability data</span><span class="tc">累積2年可靠性數據</span></li>
+    <li><strong style="color:var(--inp)">InP equilibrium</strong> — <span class="en">LITE new fab + COHR expansion</span><span class="tc">LITE新廠+COHR擴產</span></li>
+    <li><strong>3.2T mainstream</strong>, 6.4T validation</li>
+    <li><strong style="color:var(--siph)">SiPh+TFLN+InP</strong> — <span class="en">Heterogeneous integration matures</span><span class="tc">異質整合成熟</span></li>
+    <li><strong style="color:var(--dsp)">Optical CXL</strong> — <span class="en">Cross-rack memory pooling via optical PCIe/CXL begins — decoupling memory from compute</span><span class="tc">透過光學PCIe/CXL實現跨機櫃記憶體池化——解耦記憶體與運算</span></li>
+  </ul></div></div>
+</div>
+
+<!-- Catalyst Calendar -->
+<div class="c" style="margin-bottom:16px">
+  <h3 style="color:var(--plug)"><span class="en">Catalyst Calendar 2026</span><span class="tc">2026年催化劑行事曆</span></h3>
+  <div class="d" style="margin-top:8px">
+    <div class="cal-row"><div class="cal-date">Q2 2026</div><span class="en">Post-OFC 2026 supply chain order revisions + IEEE 802.3dj 200G/lane spec finalization</span><span class="tc">OFC 2026展後供應鏈訂單修正 + IEEE 802.3dj 200G/lane規格定案</span></div>
+    <div class="cal-row"><div class="cal-date">H2 2026</div><span class="en">NVIDIA Spectrum-X CPO Ethernet switches begin shipping</span><span class="tc">NVIDIA Spectrum-X CPO以太網交換器開始出貨</span></div>
+    <div class="cal-row"><div class="cal-date">Apr 28-29</div><span class="en">Broadcom Q1 earnings — NPO/CPO adoption signals</span><span class="tc">Broadcom Q1財報 — NPO/CPO採用訊號</span></div>
+    <div class="cal-row"><div class="cal-date">May 2026</div><span class="en">Credo FY26 full-year — ZeroFlap ramp + AEC trajectory</span><span class="tc">Credo FY26全年 — ZeroFlap放量+AEC軌跡</span></div>
+    <div class="cal-row"><div class="cal-date">Jun 2026</div><span class="en">LITE/COHR quarterly — InP capacity expansion execution</span><span class="tc">LITE/COHR季報 — InP擴產達成率</span></div>
+    <div class="cal-row"><div class="cal-date">H2 2026</div><span class="en">OCI MSA Gen1 detailed spec release → SiPh tape-out wave</span><span class="tc">OCI MSA Gen1規格發布 → 矽光子流片潮</span></div>
+    <div class="cal-row"><div class="cal-date">Ongoing</div><span class="en">Hyperscaler CapEx guidance each quarter — expansion vs efficiency shift?</span><span class="tc">大廠每季CapEx指引 — 擴張vs效率優化轉向？</span></div>
+  </div>
+</div>
+
+<!-- Bull/Bear Toggle -->
+<h3 style="margin:0 0 10px;font-size:16px"><span class="en">Risk Scenarios</span><span class="tc">風險情境</span></h3>
+<div class="bb-wrap">
+  <button class="bb-btn bull-on" onclick="toggleBB('bull')" id="bbBull" aria-pressed="true">🟢 <span class="en">Bull Case</span><span class="tc">看多情境</span></button>
+  <button class="bb-btn" onclick="toggleBB('bear')" id="bbBear" aria-pressed="false">🔴 <span class="en">Bear Case</span><span class="tc">看空情境</span></button>
+</div>
+<div class="bb-case bb-show" id="bbBullCase">
+  <div class="g2">
+    <div class="rc rc-bull"><div class="rt"><span class="en">CPO Yield Breakthrough</span><span class="tc">CPO良率突破</span></div><div class="rd"><span class="en">CPO reliability exceeds expectations → 2027 mass deployment pulls forward. NPO becomes bridge, not destination.</span><span class="tc">CPO可靠性超預期 → 2027大規模部署提前。NPO成為橋樑而非終點。</span></div></div>
+    <div class="rc rc-bull"><div class="rt"><span class="en">CapEx Supercycle Extends</span><span class="tc">CapEx超級周期延長</span></div><div class="rd"><span class="en">Hyperscaler spending accelerates through 2028. $1T+ cumulative CapEx. All optical supply chains benefit.</span><span class="tc">大廠支出加速至2028年。累計CapEx超$1兆。所有光學供應鏈受益。</span></div></div>
+    <div class="rc rc-bull"><div class="rt"><span class="en">OCS Goes Mainstream</span><span class="tc">OCS成為主流</span></div><div class="rd"><span class="en">Non-Google hyperscalers adopt OCS at scale → LITE/COHR OCS revenue exceeds consensus by 2×.</span><span class="tc">非Google大廠大規模採用OCS → LITE/COHR OCS營收超共識2倍。</span></div></div>
+    <div class="rc rc-bull"><div class="rt"><span class="en">Photonic Neural Network Accelerators</span><span class="tc">光子神經網路加速器</span></div><div class="rd"><span class="en">Lightmatter Envise / Lightelligence photonic compute chips gain traction → entirely new TAM beyond interconnect.</span><span class="tc">Lightmatter Envise/Lightelligence光子運算晶片獲採用 → 互連之外全新TAM。</span></div></div>
+  </div>
+</div>
+<div class="bb-case" id="bbBearCase">
+  <div class="g2">
+    <div class="rc"><div class="rt"><span class="en">Copper Physics Breakthrough</span><span class="tc">銅線物理突破</span></div><div class="rd"><span class="en">AEC/CPC extends effective range beyond 200G/lane expectations. At PCIe Gen6 (64GT/s), copper currently effective to ~1m. If materials science extends this to 2m+, optical transition delays 2-3 years.</span><span class="tc">AEC/CPC有效距離超過200G/lane預期。PCIe Gen6（64GT/s）時銅線目前有效約1m。若材料科學延伸至2m+，光學轉換延遲2-3年。</span></div></div>
+    <div class="rc"><div class="rt"><span class="en">CPO Failure Rate Crisis</span><span class="tc">CPO失效率危機</span></div><div class="rd"><span class="en">Field FIT rates 10× worse than lab. Hyperscalers retreat to NPO/LPO. CPO TAM collapses, dragging LITE/COHR valuations.</span><span class="tc">現場FIT率比實驗室差10倍。大廠退回NPO/LPO。CPO TAM崩塌拖累LITE/COHR估值。</span></div></div>
+    <div class="rc"><div class="rt"><span class="en">CapEx Efficiency Pivot</span><span class="tc">CapEx效率轉向</span></div><div class="rd"><span class="en">2027 hyperscalers shift from expansion to GPU utilization optimization + model compression. 3.2T/CPO demand undershoots consensus 30-40%. Biggest variable.</span><span class="tc">2027年大廠從擴張轉向GPU利用率優化+模型壓縮。3.2T/CPO需求低於共識30-40%。最大變數。</span></div></div>
+    <div class="rc"><div class="rt"><span class="en">Geopolitical Supply Shock</span><span class="tc">地緣政治供應衝擊</span></div><div class="rd"><span class="en">Innolight/Eoptolink (~60% NVDA volume) added to US entity list. AXTI China production disrupted. InP supply chain fractures. Patent litigation (e.g. GFS photonics IP) blocks key vendors.</span><span class="tc">Innolight/Eoptolink（NVDA約60%量）被列入美國實體清單。AXTI中國產能中斷。InP供應鏈斷裂。專利訴訟阻斷關鍵供應商。</span></div></div>
+  </div>
+</div>
+</div>
+
+</div><!-- main -->
+
+<div class="mo" id="mo" onclick="if(event.target===this)closeModal()"><div class="modal" id="mc"></div></div>
+
+<script>
+function setLang(l){document.body.className='lang-'+l;document.getElementById('bE').classList.toggle('on',l==='en');document.getElementById('bT').classList.toggle('on',l==='tc')}
+const L=()=>document.body.classList.contains('lang-tc')?'tc':'en';
+document.querySelectorAll('.nav button').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('on'));document.querySelectorAll('.sec').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('s-'+b.dataset.s)?.classList.add('on')})});
+function closeModal(){document.getElementById('mo').classList.remove('open');modalHistory=[]}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+let modalHistory=[];
+function pushHistory(type,id){modalHistory.push({type,id})}
+function popHistory(){
+  if(modalHistory.length<2){closeModal();return}
+  modalHistory.pop();
+  const prev=modalHistory[modalHistory.length-1];
+  modalHistory.pop(); // will be re-pushed by open fn
+  if(prev.type==='co')openCo(cos.find(c=>c.id===prev.id));
+  else openTech(prev.id);
+}
+function backBtn(){return modalHistory.length>1?`<button style="background:none;border:1px solid var(--bdr);border-radius:6px;color:var(--t2);font:500 11px 'DM Sans',sans-serif;padding:3px 10px;cursor:pointer;margin-right:8px" onclick="popHistory()" aria-label="Back">← <span class="en">Back</span><span class="tc">返回</span></button>`:''}
+function toggleBB(v){
+  document.getElementById('bbBullCase').classList.toggle('bb-show',v==='bull');
+  document.getElementById('bbBearCase').classList.toggle('bb-show',v==='bear');
+  document.getElementById('bbBull').classList.toggle('bull-on',v==='bull');
+  document.getElementById('bbBear').classList.toggle('bear-on',v==='bear');
+  document.getElementById('bbBull').classList.remove('bear-on');
+  document.getElementById('bbBear').classList.remove('bull-on');
+  document.getElementById('bbBull').setAttribute('aria-pressed',v==='bull');
+  document.getElementById('bbBear').setAttribute('aria-pressed',v==='bear');
+}
+
+// Tech data
+const techs={
+LPO:{name:'LPO',full_en:'Linear Pluggable Optics',full_tc:'線性驅動光學',cat:'plug',desc_en:'Removes DSP entirely. Saves ~50% power, near-zero latency. Best for short clean links.',desc_tc:'完全移除DSP。省電約50%，幾乎零延遲。適合短距離乾淨鏈路。',range:'Scale-out 2-100m',pj:'~3-5 pJ/bit',status_en:'Production (limited)',status_tc:'已量產（有限）',players:'Innolight, Eoptolink, COHR, LITE',comp_en:'Competes with LRO (more conservative) and AEC (copper)',comp_tc:'與LRO（更保守）及AEC（銅線）競爭'},
+LRO:{name:'LRO',full_en:'Linear Receive Optics',full_tc:'線性接收光學',cat:'plug',desc_en:'Removes RX DSP only, keeps TX error correction. Saves 30-40%. 2026 production mainstream. Google & Meta at scale.',desc_tc:'只移除接收端DSP。省電30-40%。2026量產主力。Google與Meta大規模採用。',range:'Scale-out 2-500m',pj:'~4-7 pJ/bit',status_en:'Mass production 2026',status_tc:'2026大規模量產',players:'Innolight, Eoptolink, COHR, LITE, FN',comp_en:'Wins over LPO on reliability; competes with AEC short-range',comp_tc:'可靠性勝LPO；短距與AEC競爭'},
+XPO:{name:'XPO',full_en:'eXtra-dense Pluggable Optics',full_tc:'極致可插拔',cat:'plug',desc_en:'Arista-led super-plug. 2.7× OSFP, 12.8Tbps/module. Built-in liquid cooling 400W+. 4× density. Preserves hot-swap.',desc_tc:'Arista主導超級插頭。2.7倍OSFP，12.8Tbps/模組。內建液冷400W+。4倍密度。保留熱插拔。',range:'Scale-out 2m-2km',pj:'Variable',status_en:'MSA 2026, sampling',status_tc:'2026 MSA發布，送樣',players:'ANET, Lightmatter, Eoptolink, TeraHop',comp_en:'Replaces OSFP at 4× density; complementary to NPO/CPO inside rack',comp_tc:'以4倍密度取代OSFP；與機櫃內NPO/CPO互補'},
+NPO:{name:'NPO',full_en:'Near-Packaged Optics',full_tc:'近封裝光學',cat:'npo',desc_en:'Optical engine mm from chip, socket-based (NOT soldered). Best of both: CPO savings + repairability. Solves CPO flaws. Validates 2026, mass prod 2027.',desc_tc:'光引擎距晶片毫米但插槽式（不焊死）。兼顧CPO省電與可維修。解決CPO缺陷。2026驗證→2027量產。',range:'Scale-up <2m, expanding',pj:'~3-5 pJ/bit',status_en:'Validation 2026, mass 2027',status_tc:'2026驗證，2027量產',players:'AVGO, Eoptolink, Lightspeed, Lightmatter, AAOI',comp_en:'Direct CPC competitor at 1-2m; bridge to CPO',comp_tc:'在1-2m直接與CPC競爭；通往CPO的橋樑'},
+CPO:{name:'CPO',full_en:'Co-Packaged Optics',full_tc:'共封裝光學',cat:'cpo',desc_en:'Optical engine co-packaged with chip. 2-3 pJ/bit. 4 problems: ❶ Repair ❷ Environment ❸ Cost ❹ ELS/fiber WIP. NVDA shipping Scale-out; Scale-up 2028.',desc_tc:'光引擎與晶片合封。2-3 pJ/bit。4大問題：❶維修 ❷環境 ❸成本 ❹雷射源/光纖未定。NVDA已出Scale-out；Scale-up 2028。',range:'Scale-up + Scale-out',pj:'2-3 pJ/bit',status_en:'Early deploy 2026, mass 2028',status_tc:'2026早期，2028大規模',players:'NVDA, AVGO, COHR, LITE, Lightmatter, Ayar Labs',comp_en:'Ultimate NPO successor; vs XPO for Scale-out',comp_tc:'NPO終極繼任；Scale-out與XPO競爭'},
+AEC:{name:'AEC',full_en:'Active Electrical Cables',full_tc:'主動電纜',cat:'cop',desc_en:'Copper + retimer for switch-to-switch 2-7m. Zero optical = lower cost. Credo dominant. "Stop-gap" but real revenue.',desc_tc:'銅纜+重定時器，交換器間2-7m。零光電=低成本。Credo主導。過渡性但真實營收。',range:'Scale-out 2-7m',pj:'N/A (electrical)',status_en:'Mature, mass production',status_tc:'成熟量產',players:'CRDO, MRVL, ALAB',comp_en:'Competes with LRO/LPO short-range; displaced >7m',comp_tc:'短距與LRO/LPO競爭；>7m被光學取代'},
+CPC:{name:'CPC',full_en:'Co-Packaged Copper',full_tc:'共封裝銅纜',cat:'cop',desc_en:'Flyover cables from chip, bypassing PCB loss. <1.5m. At PCIe Gen6+ (64GT/s) / 200G+/lane, effective copper reach shrinks below 1m. Industry: "stop-gap paving road for optics."',desc_tc:'飛越式銅纜繞過PCB損耗。<1.5m。PCIe Gen6+/200G+/lane時有效距離縮至1m以下。產業：「為光學過渡鋪路」。',range:'<1.5m (shrinking)',pj:'N/A',status_en:'Production, transitional',status_tc:'已量產，過渡性',players:'Samtec, TEL, MRVL, ALAB',comp_en:'Direct NPO competitor at 1-2m; physics ceiling hit first',comp_tc:'1-2m直接與NPO競爭；物理極限更早到來'},
+MEMS:{name:'MEMS OCS',full_en:'Micro-Electro-Mechanical OCS',full_tc:'微機電OCS',cat:'ocs',desc_en:'Microscopic mirrors physically tilt to redirect light. No electrical conversion. 108W max. Speed-immune. Lumentum proven at Google. 100-200V drive.',desc_tc:'微小鏡子物理傾斜重定向光束。無電氣轉換。108W最大。對速率免疫。Lumentum已在Google驗證。100-200V驅動。',range:'Scale-out + across',pj:'~0.1 equivalent',status_en:'Production (Google), commercial ramp',status_tc:'已量產（Google），商用放量',players:'LITE, MRVL (collab)',comp_en:'vs LCoS (Coherent) — mechanical vs solid-state',comp_tc:'vs 液晶（Coherent）——機械vs固態'},
+LCoS:{name:'LCoS OCS',full_en:'Liquid Crystal on Silicon OCS',full_tc:'液晶OCS',cat:'ocs',desc_en:'Light through liquid crystal, molecular alignment changed electrically. No moving parts. <10V drive. Claims lower failure, longer life. Less track record.',desc_tc:'光穿過液晶層，電氣改變分子排列。零運動零件。<10V。宣稱更低故障率。實績不如MEMS。',range:'Scale-out + across',pj:'~0.1 equivalent',status_en:'Commercial ramp 2026-27',status_tc:'2026-27商用放量',players:'COHR',comp_en:'Direct MEMS competitor — no moving parts vs proven',comp_tc:'直接MEMS競爭者——零運動vs成熟實績'},
+SiPh:{name:'SiPh',full_en:'Silicon Photonics',full_tc:'矽光子',cat:'siph',desc_en:'Optical circuits on CMOS lines (TSMC, Intel, GFS). Massive cost advantage. Can\'t emit light — needs InP laser. Heterogeneous integration: SiPh + TFLN + InP.',desc_tc:'CMOS產線光學線路。巨大成本優勢。不會發光——需要InP雷射。異質整合：SiPh+TFLN+InP。',range:'All distances',pj:'Varies',status_en:'Production (Innolight leads)',status_tc:'已量產（Innolight領先）',players:'Innolight, TSMC, Intel, GFS, Lightmatter, Ayar Labs',comp_en:'Complementary to InP; long-term cost disruptor',comp_tc:'與InP互補；長期成本顛覆者'},
+TFLN:{name:'TFLN',full_en:'Thin Film Lithium Niobate',full_tc:'薄膜鈮酸鋰',cat:'siph',desc_en:'Next-gen modulator. Fixes SiPh chirp/loss at 1.6T+. "Premium gearbox" for SiPh. Ultra-low power. Prevents InP overheating.',desc_tc:'下一代調變器。修復SiPh在1.6T+的問題。SiPh的「頂級變速箱」。超低功耗。防止InP過熱。',range:'All (modulator)',pj:'<1 pJ/bit',status_en:'Pilot production',status_tc:'試產中',players:'Chinese fabs (pilot), labs',comp_en:'Complementary to SiPh, not competitor',comp_tc:'與SiPh互補，非競爭'},
+HCF:{name:'HCF',full_en:'Hollow-Core Fiber',full_tc:'空芯光纖',cat:'infra',desc_en:'Light in air, not glass. ~30% faster. Ultra-low latency. Makes Scale-across practical: distant DCs feel like same building.',desc_tc:'光在空氣中傳播。快約30%。超低延遲。使Scale-across實用化。',range:'>2km Scale-across',pj:'N/A (passive)',status_en:'Production-ready, early deploy',status_tc:'可量產，早期部署',players:'YOFC, GLW, Prysmian, Nokia',comp_en:'Complements standard fiber for latency-critical',comp_tc:'為延遲敏感鏈路補充標準光纖'},
+EML:{name:'EML',full_en:'Electro-absorption Modulated Laser',full_tc:'電吸收調變雷射',cat:'infra',desc_en:'The "lightbulb+switch" InP combo chip. Core AI optical engine. ALL technologies need EML to function. Controls optical comms.',desc_tc:'InP「小燈泡+開關」合體晶片。核心AI光學引擎。所有技術都需要EML。掌控光通訊。',range:'Component (all modules)',pj:'N/A',status_en:'Production, severe shortage',status_tc:'已量產，嚴重短缺',players:'LITE (50-60%), COHR (6" vertical)',comp_en:'Universal requirement; SiPh+TFLN may reduce dependency 10yr+',comp_tc:'通用需求；SiPh+TFLN 10年+可能降低依賴'}
+};
+
+// Company data with financials
+const cos=[
+{id:'LITE',name:'Lumentum',ticker:'LITE',mkt:'NYSE',dot:'us',hq_en:'San Jose, CA',hq_tc:'加州聖荷西',biz_en:'Lasers, OCS, optical components',biz_tc:'雷射、OCS、光學元件',color:'var(--cpo)',
+ gm:'~40% (non-GAAP, trending up)',fpe:'>100×',rev_en:'~$2B run-rate. OCS backlog >$400M → $1B+ by 2027',rev_tc:'年化~$20億。OCS積壓>$4億→2027年$10億+',
+ cust_en:'Google, NVIDIA, MSFT, Meta, Oracle',cust_tc:'Google、NVIDIA、微軟、Meta、Oracle',
+ edge_en:'7yr InP contracts. NVDA $2B invest. Qorvo fab acquired. Sold out to 2027.',edge_tc:'7年InP合約。NVDA $20億投資。收購Qorvo廠。售罄至2027。',
+ techs:[{t:'EML',r_en:'50-60% datacenter share. Core laser chip supplier.',r_tc:'50-60%資料中心份額。核心雷射晶片供應商。'},{t:'MEMS',r_en:'Google Apollo OCS pioneer. Backlog >$400M.',r_tc:'Google Apollo OCS先驅。積壓>$4億。'},{t:'CPO',r_en:'CW lasers for CPO. Scale-out CPO ships 2027.',r_tc:'CPO用CW雷射。2027出貨。'},{t:'SiPh',r_en:'CloudLight subsidiary — Google SiPh supplier.',r_tc:'CloudLight子公司——Google SiPh供應商。'}]},
+{id:'COHR',name:'Coherent',ticker:'COHR',mkt:'NYSE',dot:'us',hq_en:'Saxonburg, PA',hq_tc:'賓州薩克森堡',biz_en:'Vertical optics, lasers, thermal',biz_tc:'垂直光學、雷射、散熱',color:'var(--infra)',
+ gm:'~40% (improving)',fpe:'>50×',rev_en:'Datacom ~$400M/qtr doubling. Thermadite SAM $2B by 2030',rev_tc:'資料通訊~$4億/季翻倍中。Thermadite 2030年$20億',
+ cust_en:'NVIDIA, MSFT, Meta, AWS',cust_tc:'NVIDIA、微軟、Meta、AWS',
+ edge_en:'Only 6" InP mass production (4× yield). Own fabs. NVDA $2B. Broadest InP line.',edge_tc:'唯一6吋InP量產（4倍良率）。自有廠。NVDA $20億。最廣InP線。',
+ techs:[{t:'EML',r_en:'Full vertical: 6" substrates→EML→modules. Internal wafer-to-chip.',r_tc:'完全垂直：6吋基板→EML→模組。內部晶圓到晶片。'},{t:'LCoS',r_en:'Liquid Crystal OCS — no moving parts. Direct MEMS competitor.',r_tc:'液晶OCS——零運動零件。直接MEMS競爭。'},{t:'CPO',r_en:'400mW CW lasers. Revenue H2 2026.',r_tc:'400mW CW雷射。2026H2貢獻營收。'},{t:'HCF',r_en:'Thermadite™ thermal (diamond+SiC, 2× copper). New growth engine.',r_tc:'Thermadite™散熱（鑽石+SiC，銅2倍）。新成長引擎。'}]},
+{id:'INNO',name:'Zhongji Innolight',ticker:'300308.SZ',mkt:'SZSE',dot:'cn',hq_en:'Suzhou, China',hq_tc:'中國蘇州',biz_en:'#1 global transceiver maker',biz_tc:'全球第一大光模組廠',color:'var(--std)',
+ gm:'~30%',fpe:'~35×',rev_en:'86.8% overseas. Triple-digit gains 2025. HK IPO planned.',rev_tc:'86.8%海外。2025年三位數漲幅。計劃港股上市。',
+ cust_en:'NVIDIA ~30%, Google, MSFT, Meta, AWS',cust_tc:'NVIDIA約30%、Google、微軟、Meta、AWS',
+ edge_en:'50-60% of 1.6T market. First NVDA 1.6T qual. SiPh leader.',edge_tc:'1.6T市場50-60%。首家NVDA 1.6T驗證。SiPh領先。',
+ techs:[{t:'LRO',r_en:'Mass production leader 800G/1.6T. Dominant NVDA share.',r_tc:'800G/1.6T量產領導者。NVDA份額主導。'},{t:'SiPh',r_en:'SiPh leader among CN vendors — 800G SiPh in production.',r_tc:'中國廠SiPh領先者——800G SiPh已量產。'}]},
+{id:'FN',name:'Fabrinet',ticker:'FN',mkt:'NYSE',dot:'us',hq_en:'Bangkok, Thailand',hq_tc:'泰國曼谷',biz_en:'Precision optical manufacturing',biz_tc:'精密光學製造',color:'var(--mod)',
+ gm:'~12% (manufacturing)',fpe:'~32×',rev_en:'$1.13B Q2 FY26 (+36%). $3B Thailand expansion.',rev_tc:'Q2 FY26 $11.3億（+36%）。泰國$30億擴建。',
+ cust_en:'NVIDIA #1, Lumentum, Cisco',cust_tc:'NVIDIA第一大、Lumentum、Cisco',
+ edge_en:'NVDA Tier 1. Quality benchmark. Target 50%+ self-prod. Thailand = safe.',edge_tc:'NVDA第一級。品質基準。目標50%+自製。泰國=安全。',
+ techs:[{t:'LRO',r_en:'Contract assembly NVDA in-house 800G/1.6T (TFC designs, FN builds).',r_tc:'為NVDA代工800G/1.6T（TFC設計，FN製造）。'},{t:'EML',r_en:'Assembles laser components for Lumentum and others.',r_tc:'為Lumentum等組裝雷射元件。'}]},
+{id:'CRDO',name:'Credo Technology',ticker:'CRDO',mkt:'NASDAQ',dot:'us',hq_en:'San Jose, CA',hq_tc:'加州聖荷西',biz_en:'High-speed connectivity ICs',biz_tc:'高速連接IC',color:'var(--cop)',
+ gm:'~60%+',fpe:'~80×',rev_en:'50%+ growth guidance. AEC + ZeroFlap FY27 + ALC ~2028.',rev_tc:'50%+成長指引。AEC+ZeroFlap FY27+ALC約2028。',
+ cust_en:'AWS (Trainium3), Azure, Meta',cust_tc:'AWS（Trainium3）、Azure、Meta',
+ edge_en:'Dominant AEC. Amphibian positioning. ZeroFlap 1st customer: Tensorwave.',edge_tc:'AEC主導。兩棲定位。ZeroFlap首客：Tensorwave。',
+ techs:[{t:'AEC',r_en:'Market leader. AWS/Azure/Meta adopted. 2-7m Scale-out.',r_tc:'市場領導者。AWS/Azure/Meta採用。2-7m Scale-out。'},{t:'LRO',r_en:'ZeroFlap DSP — RDMA link monitoring. 1.6T DSP vs MRVL/AVGO.',r_tc:'ZeroFlap DSP——RDMA監控。1.6T DSP與MRVL/AVGO競爭。'}]},
+{id:'ALAB',name:'Astera Labs',ticker:'ALAB',mkt:'NASDAQ',dot:'us',hq_en:'Santa Clara, CA',hq_tc:'加州聖克拉拉',biz_en:'Connectivity ICs for AI infrastructure',biz_tc:'AI基礎設施連接IC',color:'var(--dsp)',
+ gm:'~70%+',fpe:'~100×',rev_en:'Revenue inflecting with PCIe/CXL retimer + AEC solutions for AI clusters.',rev_tc:'PCIe/CXL重定時器+AEC方案帶動營收拐點。',
+ cust_en:'Major cloud providers, AI infrastructure',cust_tc:'主要雲端供應商、AI基礎設施',
+ edge_en:'PCIe/CXL retimer market leader. Aries + Taurus platforms. Expanding into optical AEC solutions. Critical for GPU-to-switch and memory disaggregation links.',edge_tc:'PCIe/CXL重定時器市場領導者。Aries+Taurus平台。擴展至光學AEC。GPU到交換器及記憶體解耦鏈路關鍵。',
+ techs:[{t:'AEC',r_en:'Expanding into AEC connectivity for AI cluster Scale-out links.',r_tc:'擴展至AI集群Scale-out鏈路的AEC連接。'},{t:'CPC',r_en:'PCIe/CXL retimers critical for copper signal integrity in Scale-up.',r_tc:'PCIe/CXL重定時器對Scale-up銅線訊號完整性至關重要。'}]},
+{id:'AVGO',name:'Broadcom',ticker:'AVGO',mkt:'NASDAQ',dot:'us',hq_en:'Palo Alto, CA',hq_tc:'加州帕羅奧圖',biz_en:'Networking silicon, switch ASICs, DSP',biz_tc:'網通晶片、ASIC、DSP',color:'var(--dsp)',
+ gm:'~75%',fpe:'~30×',rev_en:'100M+ 1.6T/3.2T modules over 5yr. Networking double-digit growth.',rev_tc:'5年出貨1億+顆1.6T/3.2T。網通雙位數成長。',
+ cust_en:'Meta (CPO), Google, NVDA, all hyperscalers',cust_tc:'Meta（CPO）、Google、NVDA、所有大廠',
+ edge_en:'NPO champion. Meta CPO partner. Switch ASIC dominant. OCI MSA founder.',edge_tc:'NPO冠軍。Meta CPO夥伴。交換器ASIC主導。OCI MSA創始。',
+ techs:[{t:'NPO',r_en:'3.2T NPO "bridge beyond copper." Validation 2026.',r_tc:'3.2T NPO「超越銅線橋樑」。2026驗證。'},{t:'CPO',r_en:'Meta CPO reliability testing partner. 102.4T→204.8T switching.',r_tc:'Meta CPO可靠性測試。102.4T→204.8T交換。'},{t:'LRO',r_en:'Taurus 1.6T DSP — key IC for all pluggable modules.',r_tc:'Taurus 1.6T DSP——所有可插拔模組關鍵IC。'}]},
+{id:'MRVL',name:'Marvell',ticker:'MRVL',mkt:'NASDAQ',dot:'us',hq_en:'Wilmington, DE',hq_tc:'德拉瓦州',biz_en:'Data infrastructure semis',biz_tc:'資料基礎設施半導體',color:'var(--dsp)',
+ gm:'~50%',fpe:'~45×',rev_en:'Custom silicon growing. Celestial AI = strategic CPO entry.',rev_tc:'客製晶片成長。Celestial AI=戰略CPO進入。',
+ cust_en:'AWS (Trainium4 core), NVDA, Google',cust_tc:'AWS（Trainium4核心）、NVDA、Google',
+ edge_en:'Acquired Celestial AI (Feb 2026). Open CPX MSA founder. OCS collab with LITE.',edge_tc:'收購Celestial AI（2026/2月）。Open CPX MSA創始。與LITE合作OCS。',
+ techs:[{t:'CPO',r_en:'Celestial AI Photonic Fabric → AWS Trainium4 first major CPO Scale-up.',r_tc:'Celestial AI光子織物→AWS Trainium4首個大規模CPO Scale-up。'},{t:'CPC',r_en:'CPC copper for AI boards. CPC+NPO hybrid demos.',r_tc:'AI主板CPC。CPC+NPO混合展示。'},{t:'MEMS',r_en:'OCS collab with LITE — rack-level, 40% inference power cut.',r_tc:'與LITE合作OCS——機架級，推理功耗降40%。'}]},
+{id:'ANET',name:'Arista',ticker:'ANET',mkt:'NYSE',dot:'us',hq_en:'Santa Clara, CA',hq_tc:'加州聖克拉拉',biz_en:'Cloud networking switches',biz_tc:'雲端網路交換器',color:'var(--plug)',
+ gm:'~65%',fpe:'~40×',rev_en:'XPO drives indirect revenue — switch system sales.',rev_tc:'XPO驅動間接營收——交換器系統銷售。',
+ cust_en:'MSFT, Meta, major cloud',cust_tc:'微軟、Meta、主要雲端',
+ edge_en:'XPO MSA creator (45 vendors). Cloud networking leader.',edge_tc:'XPO MSA創建者（45供應商）。雲端網路領導。',
+ techs:[{t:'XPO',r_en:'Creator & leader. Does NOT make modules — drives switch sales via standard.',r_tc:'創建者與領導者。不製造模組——透過標準帶動交換器銷售。'}]},
+{id:'GLW',name:'Corning',ticker:'GLW',mkt:'NYSE',dot:'us',hq_en:'Corning, NY',hq_tc:'紐約州康寧',biz_en:'Glass, fiber, connectors',biz_tc:'玻璃、光纖、連接器',color:'var(--infra)',
+ gm:'~35%',fpe:'~30×',rev_en:'$6B Meta contract. MCF: 75% fewer connectors.',rev_tc:'$60億Meta合約。MCF減少75%連接器。',
+ cust_en:'Meta ($6B), all hyperscalers',cust_tc:'Meta（$60億）、所有大廠',
+ edge_en:'Century glass expertise. MCF+HCF solve cable congestion.',edge_tc:'百年玻璃專業。MCF+HCF解決線纜擁塞。',
+ techs:[{t:'HCF',r_en:'Production-ready. 30% faster in air. Enables Scale-across.',r_tc:'可量產。空氣中快30%。實現Scale-across。'},{t:'EML',r_en:'MCF: 4 cores/fiber, 4× density. PRIZM TMT dust-immune connectors.',r_tc:'MCF：4芯/光纖，4倍密度。PRIZM TMT防塵連接器。'}]},
+{id:'AXTI',name:'AXT Inc.',ticker:'AXTI',mkt:'NASDAQ',dot:'us',hq_en:'Fremont, CA',hq_tc:'加州佛利蒙',biz_en:'InP substrates',biz_tc:'InP基板',color:'var(--inp)',
+ gm:'~30%',fpe:'~25×',rev_en:'40-60% global InP share. Orders to 2027.',rev_tc:'40-60%全球InP份額。訂單至2027。',
+ cust_en:'LITE, COHR, all laser mfrs',cust_tc:'LITE、COHR、所有雷射廠',
+ edge_en:'Dominant InP share. Pure upstream — benefits regardless of winner. China prod = geopolitical risk.',edge_tc:'InP份額主導。純上游——不管誰贏都受益。中國產能=地緣風險。',
+ techs:[{t:'EML',r_en:'Supplies raw InP "blank canvases" for all EML chips. 40-60% share.',r_tc:'供應所有EML晶片的InP「空白畫布」。40-60%份額。'}]},
+{id:'NVDA',name:'NVIDIA',ticker:'NVDA',mkt:'NASDAQ',dot:'us',hq_en:'Santa Clara, CA',hq_tc:'加州聖克拉拉',biz_en:'AI compute (Blackwell → Rubin/Vera) + networking switches',biz_tc:'AI運算（Blackwell → Rubin/Vera）+網路交換器',color:'var(--hyp)',
+ gm:'~75%',fpe:'~30×',rev_en:'Networking/interconnect revenue growing triple digits. $4B optical investment ($2B LITE + $2B COHR).',rev_tc:'網路/互連營收三位數成長。$40億光學投資（LITE $20億+COHR $20億）。',
+ cust_en:'All hyperscalers — MSFT, Meta, AWS, Oracle, Google + neoclouds',cust_tc:'所有超級大廠——微軟、Meta、AWS、Oracle、Google + 新雲端',
+ edge_en:'Largest end-buyer driving entire optical supply chain. Dual personality: aggressive CPO on Scale-out (Quantum-X/Spectrum-X switches), copper defender on Scale-up (NVLink to 2027H2). TFC-FN in-house module production targeting 50%+ share. OCI MSA co-founder.',edge_tc:'最大終端買家驅動整條光學供應鏈。雙重人格：Scale-out激進CPO（Quantum-X/Spectrum-X交換器），Scale-up死守銅線（NVLink至2027H2）。TFC-FN自製模組目標50%+。OCI MSA共同發起人。',
+ techs:[{t:'CPO',r_en:'Shipping CPO switches: Quantum-X (InfiniBand), Spectrum-X (Ethernet H2 2026). ~10-15K CPO switches in 2026. Scale-up CPO not until 2028.',r_tc:'已出貨CPO交換器：Quantum-X（InfiniBand）、Spectrum-X（以太網2026H2）。2026年約1-1.5萬台。Scale-up CPO要2028。'},{t:'CPC',r_en:'NVLink copper interconnect for Scale-up GPU clusters. Defending copper in-rack until 2027H2. "Using every means to avoid in-rack optics."',r_tc:'NVLink銅線互連用於Scale-up GPU集群。機櫃內死守銅線至2027H2。「用盡一切手段避免機櫃內走光學。」'},{t:'EML',r_en:'$4B strategic investment: $2B Lumentum + $2B Coherent to lock long-term laser capacity. Largest single buyer of EML/CW lasers globally.',r_tc:'$40億戰略投資：Lumentum $20億+Coherent $20億鎖定長期雷射產能。全球最大EML/CW雷射單一買家。'}]}
+];
+
+function getTechColor(t){const tc=techs[t];if(!tc)return'var(--t2)';return{plug:'var(--plug)',npo:'var(--npo)',cpo:'var(--cpo)',cop:'var(--cop)',ocs:'var(--ocs)',siph:'var(--siph)',infra:'var(--infra)'}[tc.cat]||'var(--t2)'}
+
+function renderCards(){
+  const g=document.getElementById('cg');if(!g)return;g.innerHTML='';
+  cos.forEach(co=>{
+    const d=document.createElement('div');d.className='c co-card';d.style.borderTop=`3px solid ${co.color}`;
+    const tp=co.techs.map(t=>`<span class="T" style="border-color:${getTechColor(t.t)};color:${getTechColor(t.t)};font-size:9px;cursor:default">${t.t}</span>`).join('');
+    d.innerHTML=`<h3>${co.name} <span class="B"><span class="dot dot-${co.dot}"></span>${co.ticker}</span></h3>
+      <div class="d"><span class="en">${co.biz_en}</span><span class="tc">${co.biz_tc}</span></div>
+      <div class="co-peek">
+        <div class="pk"><div class="pk-l"><span class="en">HQ</span><span class="tc">總部</span></div><div class="pk-v"><span class="en">${co.hq_en}</span><span class="tc">${co.hq_tc}</span></div></div>
+        <div class="pk"><div class="pk-l"><span class="en">Gross Margin</span><span class="tc">毛利率</span></div><div class="pk-v">${co.gm}</div></div>
+        <div class="pk"><div class="pk-l">Fwd P/E</div><div class="pk-v">${co.fpe}</div></div>
+      </div>
+      <div style="margin-top:6px"><div class="pk-l"><span class="en">Tech</span><span class="tc">技術參與</span></div><div class="Ts" style="margin-top:3px">${tp}</div></div>`;
+    d.onclick=()=>openCo(co);g.appendChild(d);
+  });
+}
+
+function openCo(co){
+  pushHistory('co',co.id);
+  const m=document.getElementById('mc');m.className='modal';
+  const tr=co.techs.map(t=>{const col=getTechColor(t.t);return`<div class="tr-row"><span class="T tr-tag" style="border-color:${col};color:${col}" onclick="event.stopPropagation();openTech('${t.t}')">${t.t}</span><div class="tr-role"><strong><span class="en">Role: </span><span class="tc">角色：</span></strong><span class="en">${t.r_en}</span><span class="tc">${t.r_tc}</span></div></div>`}).join('');
+  m.innerHTML=`<div class="mh"><div style="display:flex;align-items:center">${backBtn()}<h2>${co.name} <span class="B"><span class="dot dot-${co.dot}"></span>${co.ticker}</span><small><span class="en">${co.biz_en}</span><span class="tc">${co.biz_tc}</span></small></h2></div><button class="mx" onclick="closeModal()" aria-label="Close">✕</button></div>
+    <div class="mb"><div class="mg">
+      <div class="mf"><div class="mf-l"><span class="en">HQ</span><span class="tc">總部</span></div><div class="mf-v"><span class="en">${co.hq_en}</span><span class="tc">${co.hq_tc}</span></div></div>
+      <div class="mf"><div class="mf-l"><span class="en">Exchange</span><span class="tc">交易所</span></div><div class="mf-v">${co.mkt} : ${co.ticker}</div></div>
+      <div class="mf"><div class="mf-l"><span class="en">Gross Margin</span><span class="tc">毛利率</span></div><div class="mf-v">${co.gm}</div></div>
+      <div class="mf"><div class="mf-l">Forward P/E</div><div class="mf-v">${co.fpe}</div></div>
+      <div class="mf mf-full"><div class="mf-l"><span class="en">Key Customers</span><span class="tc">核心客戶</span></div><div class="mf-d"><span class="en">${co.cust_en}</span><span class="tc">${co.cust_tc}</span></div></div>
+      <div class="mf mf-full"><div class="mf-l"><span class="en">Revenue Scale</span><span class="tc">營收規模</span></div><div class="mf-d"><span class="en">${co.rev_en}</span><span class="tc">${co.rev_tc}</span></div></div>
+      <div class="mf mf-full"><div class="mf-l"><span class="en">Competitive Edge</span><span class="tc">競爭護城河</span></div><div class="mf-d"><span class="en">${co.edge_en}</span><span class="tc">${co.edge_tc}</span></div></div>
+    </div>
+    <div style="margin-top:4px"><div class="mf-l" style="margin-bottom:8px"><span class="en">Technology Involvement (click ◇ for tech info)</span><span class="tc">技術參與（點擊◇查看技術）</span></div>${tr}</div></div>`;
+  document.getElementById('mo').classList.add('open');
+  m.scrollTop=0;
+}
+
+function openTech(id){
+  const t=techs[id];if(!t)return;
+  pushHistory('tech',id);
+  const m=document.getElementById('mc');m.className='modal';
+  const col=getTechColor(id);
+  const relatedCos=cos.filter(c=>c.techs.some(x=>x.t===id));
+  const autoPlayers=relatedCos.map(c=>c.name).join(', ')||t.players;
+  const inv=relatedCos.map(c=>`<span class="B" style="cursor:pointer" onclick="openCo(cos.find(x=>x.id==='${c.id}'))"><span class="dot dot-${c.dot}"></span>${c.ticker}</span>`).join(' ');
+  m.innerHTML=`<div class="mh"><div style="display:flex;align-items:center">${backBtn()}<h2 style="color:${col}"><span class="T" style="border-color:${col};color:${col};cursor:default;font-size:12px">${t.name}</span> <span class="en">${t.full_en}</span><span class="tc">${t.full_tc}</span></h2></div><button class="mx" onclick="closeModal()" aria-label="Close">✕</button></div>
+    <div class="mb">
+      <div style="margin-bottom:12px;font-size:12px;color:var(--t2);line-height:1.6"><span class="en">${t.desc_en}</span><span class="tc">${t.desc_tc}</span></div>
+      <div class="mg">
+        <div class="mf"><div class="mf-l"><span class="en">Range</span><span class="tc">適用範圍</span></div><div class="mf-v">${t.range}</div></div>
+        <div class="mf"><div class="mf-l"><span class="en">Power</span><span class="tc">能耗</span></div><div class="mf-v">${t.pj}</div></div>
+        <div class="mf"><div class="mf-l"><span class="en">Status</span><span class="tc">狀態</span></div><div class="mf-v"><span class="en">${t.status_en}</span><span class="tc">${t.status_tc}</span></div></div>
+        <div class="mf"><div class="mf-l"><span class="en">Players</span><span class="tc">主要廠商</span></div><div class="mf-v">${autoPlayers}</div></div>
+        <div class="mf mf-full"><div class="mf-l"><span class="en">Competition</span><span class="tc">競爭關係</span></div><div class="mf-d"><span class="en">${t.comp_en}</span><span class="tc">${t.comp_tc}</span></div></div>
+      </div>
+      <div style="margin-top:4px"><div class="mf-l" style="margin-bottom:6px"><span class="en">Related Companies (click)</span><span class="tc">相關公司（點擊查看）</span></div><div class="Bs">${inv||'—'}</div></div>
+    </div>`;
+  document.getElementById('mo').classList.add('open');
+  m.scrollTop=0;
+}
+
+renderCards();
+</script>
+</body>
+</html>
